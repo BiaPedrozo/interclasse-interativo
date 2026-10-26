@@ -54,3 +54,25 @@
 .storage-note{max-width:790px;margin:18px 0 0}
 [hidden]{display:none!important}
 @media(max-width:680px){.news-managed,.admin-tools{grid-template-columns:1fr}.announcement-highlight{padding:15px}.demo-label{max-width:120px;line-height:1.5}.admin-tool-card{padding:19px}.gallery-uploaded img{height:145px}}
+
+/* Calendário, partidas e painel de resultados */
+.schedule-group{margin-top:26px}
+.subsection-heading{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:15px}
+.subsection-heading h3{font:700 20px var(--display);margin:0}
+.subsection-heading span{font-size:10px;color:#7b8798}
+.subsection-heading .demo-label{color:#9a6c4d}
+.calendar-card .match-date{font-size:10px;letter-spacing:0;text-transform:capitalize}
+.calendar-card .team{min-width:76px}
+.calendar-card .team b{font-size:12px}
+.calendar-card .teams{min-height:124px}
+.completed-match{background:#f8f9fb}
+.completed-status{background:#e4f3ea;color:#287347}
+.match-score{display:flex;align-items:center;gap:12px;font:700 22px var(--display);color:var(--navy)}
+.match-score i{font:500 12px var(--display);color:#98a1b0}
+.results-group{border-top:1px solid #e8ebef;padding-top:35px;margin-top:42px}
+.match-admin-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.match-form-teams,.score-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
+.match-form-teams>div,.score-fields>div{display:grid;gap:9px}
+.score-fields>span{display:none}
+.admin-form select{width:100%;border:1px solid #d9dee6;border-radius:4px;background:#fff;padding:11px;color:var(--navy);font:11px var(--font)}
+@media(max-width:680px){.match-admin-tools{grid-template-columns:1fr}.subsection-heading{align-items:flex-start;flex-direction:column}.calendar-card .team{min-width:65px}.calendar-card .teams{min-height:112px}.match-score{gap:8px;font-size:20px}.results-group{padding-top:27px;margin-top:32px}}

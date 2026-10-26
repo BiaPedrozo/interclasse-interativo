@@ -47,13 +47,10 @@
     <section class="ticker" aria-label="Aviso"><div class="ticker-inner"><span class="ticker-tag">AVISO</span><p>Programação de demonstração: confira os horários dos próximos jogos e chegue um pouco antes para torcer! <a href="#calendario">Ver calendário →</a></p><span class="ticker-star">✳</span></div></section>
 
     <section class="section-wrap section-block" id="calendario">
-      <div class="section-heading"><div><span class="eyebrow">A EMOÇÃO CONTINUA</span><h2>Próximos jogos</h2></div><a class="text-link" href="#resultados">Ver calendário completo <span>↗</span></a></div>
-      <div class="match-grid">
-        <article class="match-card featured-match"><div class="match-top"><span class="match-date">QUA, 12 JUN</span><span class="match-status">EM BREVE</span></div><div class="teams"><div class="team"><span class="team-badge badge-blue">AZ</span><b>Azul</b><small>8º A</small></div><span class="versus">VS</span><div class="team"><span class="team-badge badge-orange">LA</span><b>Laranja</b><small>8º B</small></div></div><div class="match-bottom"><span>⚽ Futsal · Quadra principal</span><b>14:30</b></div></article>
-        <article class="match-card"><div class="match-top"><span class="match-date">QUI, 13 JUN</span><span class="match-status status-soft">EM BREVE</span></div><div class="teams"><div class="team"><span class="team-badge badge-green">VD</span><b>Verde</b><small>9º A</small></div><span class="versus">VS</span><div class="team"><span class="team-badge badge-purple">RX</span><b>Roxo</b><small>9º B</small></div></div><div class="match-bottom"><span>🏐 Vôlei · Quadra principal</span><b>15:15</b></div></article>
-        <article class="match-card"><div class="match-top"><span class="match-date">SEX, 14 JUN</span><span class="match-status status-soft">EM BREVE</span></div><div class="teams"><div class="team"><span class="team-badge badge-yellow">AM</span><b>Amarelo</b><small>1º A</small></div><span class="versus">VS</span><div class="team"><span class="team-badge badge-red">VM</span><b>Vermelho</b><small>1º B</small></div></div><div class="match-bottom"><span>🏀 Basquete · Pátio coberto</span><b>13:45</b></div></article>
-      </div>
-      <div class="results-strip" id="resultados"><div><span class="eyebrow">PLACAR DEMONSTRATIVO</span><b>Últimos resultados</b></div><div class="result-item"><span>Azul <b>2</b> — <b>1</b> Laranja</span><small>Futsal · Rodada 1</small></div><div class="result-item"><span>Verde <b>1</b> — <b>1</b> Roxo</span><small>Vôlei · Rodada 1</small></div><a href="#calendario" aria-label="Mais resultados">↗</a></div>
+      <div class="section-heading"><div><span class="eyebrow">AGENDA DO CAMPEONATO</span><h2>Calendário de jogos</h2></div><span class="demo-label">PARTIDAS FICTÍCIAS</span></div>
+      <div class="schedule-group"><div class="subsection-heading"><h3>Jogos futuros</h3><span>Partidas agendadas</span></div><div class="match-grid" id="upcoming-match-grid" aria-live="polite"></div><p class="empty-state" id="upcoming-empty" hidden>Nenhum jogo futuro cadastrado.</p></div>
+      <div class="schedule-group" id="pending-group" hidden><div class="subsection-heading"><h3>Aguardando resultado</h3><span>Partidas passadas sem placar</span></div><div class="match-grid" id="pending-match-grid"></div></div>
+      <div class="schedule-group results-group" id="resultados"><div class="subsection-heading"><div><h3>Resultados anteriores</h3><span>Placares registrados pela organização</span></div><span class="demo-label">DEMONSTRAÇÃO</span></div><div class="match-grid" id="completed-match-grid" aria-live="polite"></div><p class="empty-state" id="completed-empty" hidden>Nenhum resultado registrado ainda.</p></div>
     </section>
 
     <section class="news-section" id="noticias">
@@ -90,7 +87,7 @@
     <section class="section-wrap section-block admin-section" id="admin">
       <div class="admin-card">
         <div class="admin-copy"><span class="eyebrow">CANTINHO DA ORGANIZAÇÃO</span><h2>Área administrativa</h2><p>Painel demonstrativo. Cadastros e imagens ficam somente neste navegador e não são publicados para outras pessoas.</p><a class="button button-light" href="#admin-tools">Gerenciar conteúdo <span>↓</span></a></div>
-        <div class="admin-preview"><div class="preview-top"><span>PAINEL DO EVENTO</span><span class="preview-dots">● ● ●</span></div><div class="preview-body"><div class="preview-stat"><small>NOTÍCIAS LOCAIS</small><b id="news-count">0</b><span>Salvas neste navegador</span></div><div class="preview-stat"><small>FOTOS LOCAIS</small><b id="photo-count">0</b><span>Armazenamento privado</span></div><div class="preview-row"><span>Status</span><b>DEMONSTRAÇÃO</b></div></div></div>
+        <div class="admin-preview"><div class="preview-top"><span>PAINEL DO EVENTO</span><span class="preview-dots">● ● ●</span></div><div class="preview-body"><div class="preview-stat"><small>NOTÍCIAS LOCAIS</small><b id="news-count">0</b><span>Salvas neste navegador</span></div><div class="preview-stat"><small>FOTOS LOCAIS</small><b id="photo-count">0</b><span>Armazenamento privado</span></div><div class="preview-stat"><small>PARTIDAS CADASTRADAS</small><b id="match-count">0</b><span>Agenda demonstrativa</span></div><div class="preview-row"><span>Status</span><b>DEMONSTRAÇÃO</b></div></div></div>
       </div>
       <div class="admin-tools" id="admin-tools">
         <div class="admin-tool-card">
@@ -112,6 +109,29 @@
             <p class="field-hint">As fotos selecionadas são guardadas neste navegador. Não são enviadas a um servidor.</p>
             <button class="button button-orange" type="submit">Adicionar fotos <span>→</span></button>
             <p class="form-feedback" id="photo-feedback" aria-live="polite">Escolha pelo menos uma imagem.</p>
+          </form>
+        </div>
+      </div>
+      <div class="match-admin-tools">
+        <div class="admin-tool-card">
+          <span class="eyebrow">AGENDA</span><h3>Cadastrar partida fictícia</h3>
+          <form id="match-form" class="admin-form">
+            <label for="match-date">Data <span aria-hidden="true">*</span></label><input id="match-date" name="date" type="date" required>
+            <label for="match-time">Horário <span aria-hidden="true">*</span></label><input id="match-time" name="time" type="time" required>
+            <label for="match-sport">Modalidade <span aria-hidden="true">*</span></label><input id="match-sport" name="sport" maxlength="40" placeholder="Ex.: Futsal" required>
+            <div class="match-form-teams"><div><label for="match-home">Turma 1 <span aria-hidden="true">*</span></label><input id="match-home" name="home" maxlength="40" placeholder="Ex.: 8º A" required></div><div><label for="match-away">Turma 2 <span aria-hidden="true">*</span></label><input id="match-away" name="away" maxlength="40" placeholder="Ex.: 8º B" required></div></div>
+            <label for="match-location">Local <span aria-hidden="true">*</span></label><input id="match-location" name="location" maxlength="70" placeholder="Ex.: Quadra principal" required>
+            <button class="button button-orange" type="submit">Cadastrar partida <span>→</span></button>
+            <p class="form-feedback" id="match-feedback" aria-live="polite">Partidas novas são adicionadas sem alterar as existentes.</p>
+          </form>
+        </div>
+        <div class="admin-tool-card">
+          <span class="eyebrow">PLACAR OFICIAL DA DEMONSTRAÇÃO</span><h3>Registrar ou corrigir resultado</h3>
+          <form id="score-form" class="admin-form">
+            <label for="score-match">Partida <span aria-hidden="true">*</span></label><select id="score-match" name="matchId" required><option value="">Selecione uma partida</option></select>
+            <div class="score-fields"><div><label for="score-home">Placar da turma 1 <span aria-hidden="true">*</span></label><input id="score-home" name="homeScore" type="number" min="0" max="99" step="1" inputmode="numeric" required></div><span aria-hidden="true">×</span><div><label for="score-away">Placar da turma 2 <span aria-hidden="true">*</span></label><input id="score-away" name="awayScore" type="number" min="0" max="99" step="1" inputmode="numeric" required></div></div>
+            <button class="button button-orange" type="submit">Salvar placar <span>→</span></button>
+            <p class="form-feedback" id="score-feedback" aria-live="polite">Corrigir um placar existente pede confirmação.</p>
           </form>
         </div>
       </div>
