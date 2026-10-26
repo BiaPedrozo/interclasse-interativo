@@ -1,147 +1,316 @@
 # Diagramas do Interclasse Interativo
 
-Os diagramas Mermaid abaixo descrevem os atores e limites do protótipo. O diagrama de casos de uso retrata interações presentes ou parcialmente presentes. O diagrama entidade-relacionamento é uma **proposta conceitual futura** para uma versão com backend e banco relacional; ele não representa tabelas existentes no código atual.
+Os diagramas representam o **escopo completo pretendido**, e não funcionalidades já implantadas. A interface atual é estática e usa armazenamento do navegador. O arquivo SQL em `../server/db/migrations/001_initial_schema.sql` é uma migração proposta ainda não executada. Os modelos abaixo devem ser atualizados quando regras e arquitetura forem implementadas.
 
 ## 1. Casos de uso
 
 ```mermaid
 flowchart LR
-  Estudante[Estudante / visitante]
-  Admin[Administrador demonstrativo<br/>(sem autenticação implementada)]
-
-  subgraph Sistema[Interclasse Interativo — protótipo no navegador]
-    UC1((Consultar início e avisos))
-    UC2((Consultar notícias))
-    UC3((Consultar calendário))
-    UC4((Consultar resultados))
-    UC5((Consultar galeria))
-    UC6((Enviar voto demonstrativo<br/>sem persistência))
-    UC7((Cadastrar notícia local))
-    UC8((Remover notícia local))
-    UC9((Adicionar fotos locais))
-    UC10((Cadastrar partida local))
-    UC11((Registrar placar))
-    UC12((Corrigir placar<br/>com confirmação))
+  Visitante[Estudante / visitante]
+  Admin[Administrador autenticado\n(versão futura)]
+  subgraph Sistema[Interclasse Interativo]
+    U1((Consultar notícias e avisos))
+    U2((Consultar agenda e resultados))
+    U3((Consultar classificação))
+    U4((Consultar galeria))
+    U5((Votar em enquete aberta))
+    A1((Gerenciar turmas, equipes e atletas))
+    A2((Gerenciar partidas e placares))
+    A3((Gerenciar notícias e imagens))
+    A4((Gerenciar votações e candidatos))
+    A5((Autenticar e encerrar sessão))
   end
-
-  Estudante --> UC1
-  Estudante --> UC2
-  Estudante --> UC3
-  Estudante --> UC4
-  Estudante --> UC5
-  Estudante --> UC6
-
-  Admin --> UC1
-  Admin --> UC7
-  Admin --> UC8
-  Admin --> UC9
-  Admin --> UC10
-  Admin --> UC11
-  Admin --> UC12
-  Admin --> UC2
-  Admin --> UC3
-  Admin --> UC4
-  Admin --> UC5
+  Visitante --> U1
+  Visitante --> U2
+  Visitante --> U3
+  Visitante --> U4
+  Visitante --> U5
+  Admin --> A1
+  Admin --> A2
+  Admin --> A3
+  Admin --> A4
+  Admin --> A5
+  Admin --> U1
+  Admin --> U2
+  Admin --> U3
+  Admin --> U4
 ```
 
-**Leitura:** os atores distinguem papéis esperados, mas a aplicação não autentica nem autoriza pessoas. As interações administrativas são formulários públicos e locais. O envio de voto é somente uma confirmação visual. Não há caso de uso de edição/remoção de partida ou de apuração de votos porque esses recursos não foram encontrados.
+O ator administrador autenticado é parte da versão futura. Atualmente, a área é pública e o voto não é gravado. Os casos de uso de cadastro e votação compartilhada permanecem pendentes.
 
-## 2. Modelo entidade-relacionamento proposto para evolução
+## 2. Entidade-relacionamento proposto
 
-Este esquema é uma proposta separada da implementação atual. Pode ser revisado quando forem definidos o regulamento do campeonato, os responsáveis por administrar dados e as regras de privacidade.
+Este ER acompanha as entidades e chaves da migração SQLite proposta. Não representa tabelas que já estejam sendo usadas pelo site.
 
 ```mermaid
 erDiagram
-  TURMA ||--o{ ATLETA : possui
-  TURMA ||--o{ PARTIDA : participa_como_mandante
-  TURMA ||--o{ PARTIDA : participa_como_visitante
-  MODALIDADE ||--o{ PARTIDA : classifica
-  PARTIDA ||--o| RESULTADO : possui
-  ADMINISTRADOR ||--o{ NOTICIA : publica
-  ATLETA ||--o{ CANDIDATO : pode_ser
-  ENQUETE ||--|{ CANDIDATO : apresenta
-  ENQUETE ||--o{ VOTO : recebe
-  CANDIDATO ||--o{ VOTO : escolhido_em
-  ESTUDANTE ||--o{ VOTO : registra
+  SCHOOL_CLASSES o|--o{ USERS : associa
+  SCHOOL_CLASSES ||--o{ TEAMS : organiza
+  MODALITIES ||--o{ TEAMS : define
+  TEAMS ||--o{ ATHLETES : compoe
+  MODALITIES ||--o{ MATCHES : classifica
+  TEAMS ||--o{ MATCHES : mandante
+  TEAMS ||--o{ MATCHES : visitante
+  USERS ||--o{ MATCHES : cadastra
+  MATCHES ||--o| RESULTS : recebe
+  USERS ||--o{ RESULTS : atualiza
+  USERS ||--o{ NEWS : publica
+  USERS ||--o{ IMAGES : envia
+  USERS ||--o{ POLLS : cria
+  POLLS ||--o{ CANDIDATES : apresenta
+  ATHLETES ||--o{ CANDIDATES : concorre
+  POLLS ||--o{ VOTES : recebe
+  CANDIDATES ||--o{ VOTES : escolhida
+  USERS ||--o{ VOTES : estudante_vota
+  USERS ||--o{ AUDIT_LOG : executa
 
-  TURMA {
-    int turma_id PK
-    string identificacao
-    string ano_serie
+  SCHOOL_CLASSES {
+    int id PK
+    string name UK
+    string year_label
   }
-  ATLETA {
-    int atleta_id PK
-    int turma_id FK
-    string nome
+  USERS {
+    int id PK
+    string email UK
+    string password_hash
+    string role
+    int class_id FK
+    boolean active
   }
-  MODALIDADE {
-    int modalidade_id PK
-    string nome
+  MODALITIES {
+    int id PK
+    string name UK
+    int points_win
+    int points_draw
+    int points_loss
+    string tie_breakers_json
   }
-  PARTIDA {
-    int partida_id PK
-    int modalidade_id FK
-    int turma_mandante_id FK
-    int turma_visitante_id FK
-    datetime data_hora
-    string local
+  TEAMS {
+    int id PK
+    int class_id FK
+    int modality_id FK
+    string name
+  }
+  ATHLETES {
+    int id PK
+    int team_id FK
+    string name
+    int shirt_number
+  }
+  MATCHES {
+    int id PK
+    int modality_id FK
+    int home_team_id FK
+    int away_team_id FK
+    string starts_at
+    int duration_minutes
+    string venue
     string status
   }
-  RESULTADO {
-    int resultado_id PK
-    int partida_id FK
-    int placar_mandante
-    int placar_visitante
-    datetime atualizado_em
+  RESULTS {
+    int id PK
+    int match_id FK_UK
+    int home_score
+    int away_score
+    int updated_by FK
   }
-  ADMINISTRADOR {
-    int administrador_id PK
-    string nome
-    string credencial_hash
+  NEWS {
+    int id PK
+    int author_id FK
+    string title
+    string content
+    string status
+    boolean featured
   }
-  NOTICIA {
-    int noticia_id PK
-    int administrador_id FK
-    string titulo
-    text conteudo
-    datetime publicada_em
-    boolean destaque
+  IMAGES {
+    int id PK
+    string storage_key UK
+    string mime_type
+    int byte_size
+    string caption
+    string alt_text
+    boolean consent_confirmed
+    int uploaded_by FK
   }
-  ENQUETE {
-    int enquete_id PK
-    string titulo
-    datetime inicio
-    datetime fim
+  POLLS {
+    int id PK
+    int created_by FK
+    string title
+    string category
+    string starts_at
+    string ends_at
     string status
   }
-  CANDIDATO {
-    int candidato_id PK
-    int enquete_id FK
-    int atleta_id FK
-    string descricao
+  CANDIDATES {
+    int id PK
+    int poll_id FK
+    int athlete_id FK
+    string description
   }
-  ESTUDANTE {
-    int estudante_id PK
-    string identificador_protegido
+  VOTES {
+    int id PK
+    int poll_id FK
+    int candidate_id FK
+    int student_id FK
+    string created_at
   }
-  VOTO {
-    int voto_id PK
-    int enquete_id FK
-    int candidato_id FK
-    int estudante_id FK
-    datetime registrado_em
+  AUDIT_LOG {
+    int id PK
+    int actor_id FK
+    string action
+    string entity_type
+    int entity_id
   }
 ```
 
-### Cardinalidades e premissas propostas
+### Relacionamentos e integridade
 
-- Uma turma pode possuir nenhum ou vários atletas; cada atleta pertence a uma turma.
-- Uma partida possui uma modalidade e referencia uma turma mandante e uma visitante. Uma turma pode participar de várias partidas em cada papel.
-- Uma partida pode ainda não ter resultado ou possuir um resultado; cada resultado se refere a exatamente uma partida. Se o histórico de correções for necessário, o relacionamento deve ser alterado para permitir múltiplas versões de resultado.
-- Um administrador pode publicar várias notícias; cada notícia tem um responsável pela publicação.
-- Uma enquete possui um ou mais candidatos e pode receber vários votos. Cada voto escolhe exatamente um candidato e pertence a uma enquete.
-- Atleta pode ser candidato em zero ou várias enquetes; cada candidatura referencia um atleta.
-- Estudante pode registrar vários votos em enquetes diferentes. Para limitar a um voto por enquete, a proposta deve impor unicidade em `(enquete_id, estudante_id)` e validar elegibilidade no servidor.
-- As entidades `ESTUDANTE` e `ADMINISTRADOR` implicam tratamento de identidade. Uma implantação deve minimizar dados pessoais e definir retenção e acesso; a forma de identificação ainda precisa de decisão institucional.
+- `USERS.role` separa `admin` e `student`; estudante pode pertencer a uma turma. Autorização deve ser verificada no servidor.
+- Uma equipe pertence a uma turma e a uma modalidade. Cada atleta pertence a uma equipe; a unicidade por equipe/nome reduz duplicidade.
+- Partida referencia modalidade e duas equipes distintas. Chaves estrangeiras compostas propostas fazem as equipes pertencerem à modalidade do jogo.
+- Resultado é opcional e único por partida; correções atualizam autoria e data. Para histórico imutável, seria necessária uma tabela adicional de versões.
+- Os valores de pontos e desempate ficam por modalidade, evitando misturar modalidades. A configuração inicial é ilustrativa e depende de validação da comissão.
+- A chave única de voto proposta `(poll_id, student_id)` limita um voto por estudante/enquete. O servidor ainda precisa confirmar identidade, janela e situação da enquete e pertencimento do candidato.
+- Arquivo de imagem fica fora do banco; metadados e estado de consentimento ficam na tabela `images`. A caixa de consentimento ainda não equivale a validação legal ou autorização obtida.
+- A tabela `audit_log` registra ações administrativas importantes sem guardar senhas ou segredos.
 
-O protótipo usa objetos JSON em armazenamento do navegador e fotos em IndexedDB, não estas entidades ou cardinalidades em um banco de dados.
+## 3. Diagrama de classes proposto
+
+```mermaid
+classDiagram
+  class User {
+    +id: integer
+    +email: string
+    +passwordHash: string
+    +role: string (admin ou student)
+    +active: boolean
+  }
+  class SchoolClass {
+    +id: integer
+    +name: string
+    +yearLabel: string
+  }
+  class Team {
+    +id: integer
+    +name: string
+  }
+  class Athlete {
+    +id: integer
+    +name: string
+    +shirtNumber: integer
+  }
+  class Modality {
+    +id: integer
+    +name: string
+    +scoringRules: object
+    +tieBreakers: list
+  }
+  class Match {
+    +id: integer
+    +startsAt: datetime
+    +durationMinutes: integer
+    +venue: string
+    +status: string
+  }
+  class Result {
+    +homeScore: integer
+    +awayScore: integer
+    +updatedAt: datetime
+  }
+  class Poll {
+    +id: integer
+    +startsAt: datetime
+    +endsAt: datetime
+    +status: draft|open|closed
+  }
+  class Candidate
+  class Vote
+  class News
+  class Image
+  class StandingsService {
+    +calculate(modalityId): StandingRow[]
+  }
+  class AuthService {
+    +authenticate(email, password): Session
+    +authorize(user, role): boolean
+  }
+
+  SchoolClass "1" --> "0..*" User : estudantes
+  SchoolClass "1" --> "0..*" Team
+  Modality "1" --> "0..*" Team
+  Team "1" --> "0..*" Athlete
+  Modality "1" --> "0..*" Match
+  Team "1" --> "0..*" Match : mandante
+  Team "1" --> "0..*" Match : visitante
+  Match "1" --> "0..1" Result
+  User "1" --> "0..*" News : autor
+  User "1" --> "0..*" Poll : administrador
+  Poll "1" --> "0..*" Candidate
+  Athlete "1" --> "0..*" Candidate
+  Poll "1" --> "0..*" Vote
+  Candidate "1" --> "0..*" Vote
+  User "1" --> "0..*" Vote : estudante
+  StandingsService ..> Match
+  StandingsService ..> Result
+  StandingsService ..> Modality
+  AuthService ..> User
+```
+
+É um modelo lógico de proposta para organizar responsabilidades; não existe código de classes no projeto atual, que usa JavaScript no navegador.
+
+## 4. Fluxo de votação proposto
+
+```mermaid
+flowchart TD
+  A[Estudante solicita votação] --> B{Sessão autenticada como estudante?}
+  B -- Não --> X[Responder não autorizado]
+  B -- Sim --> C{Enquete aberta no período?}
+  C -- Não --> Y[Informar enquete indisponível]
+  C -- Sim --> D{Candidato ativo pertence à enquete?}
+  D -- Não --> Z[Rejeitar seleção inválida]
+  D -- Sim --> E[Iniciar transação no servidor]
+  E --> F{Já existe voto para estudante e enquete?}
+  F -- Sim --> G[Rejeitar duplicidade sem registrar novo voto]
+  F -- Não --> H[Inserir voto com restrição única]
+  H --> I[Confirmar transação]
+  I --> J[Responder confirmação]
+  G --> K[Encerrar transação]
+```
+
+O fluxo ainda não existe no protótipo: o formulário apenas muda o texto de feedback. Um identificador confiável de estudante e critérios para apuração precisam ser aprovados pela escola antes de implementar votos reais.
+
+## 5. Sequência proposta: cadastrar partida e atualizar resultado
+
+```mermaid
+sequenceDiagram
+  actor Admin as Administrador
+  participant UI as Interface web
+  participant API as Express API
+  participant Auth as Sessão/autorização
+  participant DB as SQLite
+
+  Admin->>UI: Preenche e envia partida
+  UI->>API: POST /api/matches + token CSRF
+  API->>Auth: Validar sessão e função admin
+  Auth-->>API: Usuário autorizado
+  API->>API: Validar campos e conflito de horário/local
+  API->>DB: BEGIN; inserir partida com parâmetros
+  DB-->>API: id da partida
+  API->>DB: COMMIT
+  API-->>UI: 201 + partida criada
+
+  Admin->>UI: Informa placar e confirma correção
+  UI->>API: PUT /api/matches/{id}/result + token CSRF
+  API->>Auth: Validar sessão e função admin
+  Auth-->>API: Usuário autorizado
+  API->>API: Validar placar e regras da modalidade
+  API->>DB: BEGIN; inserir/atualizar resultado e status
+  DB-->>API: atualização concluída
+  API->>DB: COMMIT
+  API-->>UI: 200 + resultado
+  UI->>API: GET /api/standings?modality=...
+  API->>DB: Consultar partidas, resultados e regras da modalidade
+  API-->>UI: Classificação recalculada
+```
+
+O diagrama descreve o comportamento que deverá ser desenvolvido. Nenhum endpoint/API ou conta autenticada está presente atualmente.

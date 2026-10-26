@@ -20,6 +20,14 @@ O Interclasse Interativo é um site demonstrativo destinado a apoiar a comunica�
 
 O protótipo atual foi desenvolvido como aplicação estática no navegador, com HTML, CSS e JavaScript. Os dados de exemplo são fictícios. Notícias, partidas e resultados podem ser manipulados localmente no navegador; fotos selecionadas são armazenadas localmente. O formulário de votação apresenta uma confirmação, mas não registra nem contabiliza votos. Não há servidor, autenticação ou banco de dados.
 
+### 1.1 Contextualização
+
+O campeonato interclasse reúne turmas em atividades esportivas e envolve divulgação de agenda, comunicação de alterações, registro de resultados e participação estudantil. Como não foram fornecidas informações institucionais, este projeto mantém nomes, datas e regras fictícios e deixa editáveis os dados de identificação da escola.
+
+### 1.2 Metodologia de desenvolvimento
+
+O trabalho foi organizado em etapas incrementais: auditoria dos arquivos existentes; identificação das tecnologias e do comportamento real; elaboração de requisitos e modelos; implementação de interface; e preparação de um plano de testes. A auditoria e a documentação foram realizadas. A transformação para uma arquitetura de servidor e banco de dados está planejada, mas depende da disponibilidade e autorização para instalar o runtime e as dependências. Assim, os testes automatizados dessa arquitetura permanecem pendentes.
+
 ## 2. Problema
 
 Quando os avisos, horários, mudanças de agenda e resultados de um campeonato são divulgados em canais separados, estudantes e representantes podem ter dificuldade para localizar a versão mais recente das informações. A comissão organizadora também pode precisar repetir comunicados e atualizar placares em vários lugares. A participação da comunidade escolar depende, ainda, de meios acessíveis para acompanhar o evento e conhecer as atividades.
@@ -84,6 +92,8 @@ Estão implementados no código:
 
 O navegador executa os arquivos diretamente. Não foram encontrados frameworks, bibliotecas de interface, API de servidor, banco de dados relacional ou mecanismo de autenticação no código analisado. O modelo entidade-relacionamento deste trabalho é uma proposta futura, não uma estrutura de dados implantada.
 
+Uma evolução técnica proposta é Node.js LTS com Express 5 e SQLite por driver mantido, preservando o cliente HTML/CSS/JavaScript. A migração proposta está em `../server/db/migrations/001_initial_schema.sql`; ainda não foi executada e não há API associada. A versão LTS deve ser confirmada na implantação. Consulte [`banco-de-dados.md`](banco-de-dados.md). A escolha considera o servidor HTTP do Express e a possibilidade de manter uma base SQLite em uma implantação pequena; Node.js 24 aparece como LTS na consulta técnica de 26/10/2026. A API nativa `node:sqlite` ainda é release candidate nessa documentação e por isso não foi escolhida como driver principal.
+
 ## 9. Regras de negócio resumidas
 
 1. Dados iniciais são identificados como demonstração e não representam informações confirmadas de uma escola.
@@ -113,6 +123,10 @@ O protótipo reúne, em uma página responsiva, os principais pontos de consulta
 
 Como resultado esperado em contexto acadêmico, o projeto permite exercitar estruturação de requisitos, interface web, validação de formulários, armazenamento no navegador, modelagem e planejamento de testes. O uso real depende de validação com a escola e de melhorias técnicas e organizacionais.
 
+### 12.1 Resultados esperados para a versão completa
+
+Espera-se que uma versão futura centralize dados compartilhados, restrinja ações administrativas, calcule classificação com regras configuráveis por modalidade e trate votos e imagens conforme critérios de integridade e privacidade. Esses resultados ainda não foram alcançados; requerem implementação e validação descritas em [`requisitos.md`](requisitos.md) e [`plano-de-testes.md`](plano-de-testes.md).
+
 ## 13. Pendências e próximos passos
 
 1. Validar os requisitos e os conteúdos com a escola, sem publicar dados pessoais sem autorização.
@@ -128,3 +142,6 @@ Como resultado esperado em contexto acadêmico, o projeto permite exercitar estr
 - Arquivos do protótipo: `index.html`, `css/styles.css` e `js/app.js`.
 - Instruções de execução e persistência: [`../README.md`](../README.md).
 - Requisitos, diagramas e plano de testes deste documento.
+- Node.js, página oficial de versões: https://nodejs.org/en/about/previous-releases (consulta técnica em 26/10/2026).
+- Express 5, documentação oficial de instalação: https://expressjs.com/en/5x/starter/installing/.
+- `better-sqlite3`, documentação do pacote: https://www.npmjs.com/package/better-sqlite3.

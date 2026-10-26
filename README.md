@@ -2,12 +2,17 @@
 
 Site demonstrativo responsivo para um campeonato escolar, feito com HTML, CSS e JavaScript puro. Os nomes, datas, jogos, placares, votações e notícias iniciais são fictícios e servem somente para ilustrar a interface.
 
+**Estado técnico:** esta versão ainda é somente front-end. Não possui backend, autenticação ou banco persistente compartilhado. A proposta de evolução para Express/SQLite está em `documentacao/banco-de-dados.md`; a migração é um schema de projeto e não está ligada ao site.
+
 ## Arquivos
 
 - `index.html`: estrutura das seções, conteúdo e navegação do site.
 - `css/styles.css`: identidade visual azul-escuro, branco e laranja, incluindo os ajustes para telas menores.
 - `js/app.js`: menu móvel, votação demonstrativa, notícias, galeria local, calendário e resultados.
 - `assets/images/`: pasta reservada para imagens que venham a ser adicionadas ao projeto. As imagens escolhidas no formulário não são copiadas para esta pasta.
+- `documentacao/`: documentação acadêmica, requisitos, diagramas, banco proposto e plano de testes.
+- `server/db/migrations/001_initial_schema.sql`: proposta de schema relacional; ainda não aplicada por um backend.
+- `server/db/tests/schema-smoke-test.ps1`: teste do schema SQLite em memória para Windows.
 
 ## Como executar
 
@@ -32,3 +37,13 @@ Em uma versão publicada, seria necessário um serviço de backend com autentica
 4. Selecione um resultado já concluído. Os placares atuais aparecem nos campos. Ao salvar uma alteração, confirme a substituição; se cancelar, o resultado anterior permanece. Nenhuma partida é alterada ou excluída por navegar ou selecionar opções.
 
 Todos esses fluxos são locais e demonstrativos. A listagem não sincroniza com outros navegadores ou dispositivos.
+
+## Documentação e testes disponíveis
+
+Consulte [`documentacao/README.md`](documentacao/README.md) para o índice dos documentos. Um teste de fumaça executado no Windows valida a sintaxe da migração e algumas restrições SQLite sem criar arquivo de banco:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\server\db\tests\schema-smoke-test.ps1
+```
+
+Esse teste não verifica um servidor web, autenticação ou persistência compartilhada. Os demais casos ainda estão no plano de testes como não executados ou pendentes do backend.
