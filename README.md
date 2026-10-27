@@ -2,7 +2,7 @@
 
 Site demonstrativo responsivo para um campeonato escolar, feito com HTML, CSS e JavaScript puro. Os nomes, datas, jogos, placares, votações e notícias iniciais são fictícios e servem somente para ilustrar a interface.
 
-**Estado técnico:** esta versão ainda é somente front-end. Não possui backend, autenticação ou banco persistente compartilhado. A proposta de evolução para Express/SQLite está em `documentacao/banco-de-dados.md`; a migração é um schema de projeto e não está ligada ao site.
+**Estado técnico:** a interface continua sendo front-end estático, mas o repositório agora inclui uma migração PostgreSQL para o Supabase em `supabase/migrations/`. Ela cria o banco, as regras de acesso e a classificação; ainda é necessário aplicá-la ao projeto Supabase e conectar a interface à API para haver sincronização compartilhada.
 
 ## Arquivos
 
@@ -13,6 +13,31 @@ Site demonstrativo responsivo para um campeonato escolar, feito com HTML, CSS e 
 - `documentacao/`: documentação acadêmica, requisitos, diagramas, banco proposto e plano de testes.
 - `server/db/migrations/001_initial_schema.sql`: proposta de schema relacional; ainda não aplicada por um backend.
 - `server/db/tests/schema-smoke-test.ps1`: teste do schema SQLite em memória para Windows.
+- `supabase/migrations/20261027120000_initial_schema.sql`: migração PostgreSQL para Supabase, com RLS, autenticação por `auth.users`, validações de voto e bucket privado de galeria.
+
+## Aplicar a migração no Supabase
+
+1. No painel do projeto Supabase, abra **SQL Editor**, crie uma nova consulta e cole o conteúdo de `supabase/migrations/20261027120000_initial_schema.sql`.
+2. Execute a consulta uma única vez. Alternativamente, com o Supabase CLI vinculado ao projeto, rode `supabase db push` na raiz do repositório.
+3. Crie a primeira conta no **Authentication > Users**. O gatilho cria um perfil de estudante. Promova apenas uma conta autorizada a administradora pelo SQL Editor:
+
+```sql
+update public.profiles
+set role = 'admin'
+where id = 'UUID_DA_CONTA_AUTORIZADA';
+```
+
+O bucket `gallery` é privado. A interface já consulta e atualiza notícias, partidas e resultados pelo Supabase quando a configuração estiver preenchida. O envio compartilhado de imagens permanece pendente de integração da galeria.
+
+## Conectar a interface ao Supabase
+
+1. Aplique primeiro a migração SQL ao projeto Supabase.
+2. Em **Project Settings > API**, copie a chave **anon** ou **publishable**. Não use a chave `service_role` no navegador.
+3. Cole a chave em `js/supabase-config.js`, no valor de `anonKey`.
+4. Crie uma conta em **Authentication > Users** e promova-a a `admin` com o comando indicado acima.
+5. Abra `index.html` por um servidor local. A área administrativa permite entrar com essa conta para publicar notícias, cadastrar partidas e registrar placares no banco compartilhado.
+
+Com a chave vazia, o site continua em modo local de demonstração. A chave anon é pública por definição; a proteção dos dados depende das políticas RLS incluídas na migração.
 
 ## Como executar
 

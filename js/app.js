@@ -435,6 +435,98 @@ document.querySelector('#vote-form').addEventListener('submit', (event) => {
   setFeedback(feedback, `Voto demonstrativo registrado para ${candidate.split(' — ')[0]}.`, 'success');
 });
 
+/* Integração compartilhada com Supabase. Sem anon key, o modo local continua disponível. */
+const supabase = window.InterclasseSupabase;
+const supabaseStatus = document.querySelector('#supabase-status');
+const authForm = document.querySelector('#auth-form');
+const authFeedback = document.querySelector('#auth-feedback');
+const signOutButton = document.querySelector('#auth-signout');
+
+function remoteEnabled() { return Boolean(supabase?.configured()); }
+
+function updateAuthInterface(profile) {
+  const signedIn = Boolean(profile);
+  authForm.querySelectorAll('input').forEach((input) => { input.disabled = signedIn; });
+  authForm.querySelector('button[type="submit"]').hidden = signedIn;
+  signOutButton.hidden = !signedIn;
+  if (!remoteEnabled()) { supabaseStatus.textContent = 'Modo local: inclua a anon key em js/supabase-config.js para conectar ao Supabase.'; return; }
+  if (profile?.role === 'admin' && profile.active) {
+    supabaseStatus.textContent = `Conectado ao Supabase como administrador(a): ${profile.display_name}.`;
+    setFeedback(authFeedback, 'Acesso administrativo ativo.', 'success');
+  } else if (profile) {
+    supabaseStatus.textContent = `Conectado ao Supabase como ${profile.display_name}. Esta conta não possui permissão administrativa.`;
+    setFeedback(authFeedback, 'Conta autenticada sem permissão administrativa.', 'error');
+  } else supabaseStatus.textContent = 'Conectado ao Supabase. Entre com uma conta administrativa para publicar conteúdo.';
+}
+
+async function loadSharedData() {
+  if (!remoteEnabled()) { updateAuthInterface(null); return; }
+  try {
+    const [remoteNews, remoteMatches, profile] = await Promise.all([supabase.loadNews(), supabase.loadMatches(), supabase.profile()]);
+    newsItems = remoteNews; matches = remoteMatches; renderNews(); renderSchedule(); updateAuthInterface(profile);
+  } catch (error) {
+    console.warn('Falha ao carregar dados do Supabase.', error);
+    supabaseStatus.textContent = `Não foi possível carregar o Supabase: ${error.message}`;
+  }
+}
+
+authForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (!remoteEnabled()) { setFeedback(authFeedback, 'Configure a anon key antes de entrar.', 'error'); return; }
+  const data = new FormData(authForm);
+  try { updateAuthInterface(await supabase.signIn(data.get('email'), data.get('password'))); }
+  catch (error) { setFeedback(authFeedback, error.message, 'error'); }
+});
+signOutButton.addEventListener('click', async () => {
+  try { await supabase.signOut(); updateAuthInterface(null); } catch (error) { setFeedback(authFeedback, error.message, 'error'); }
+});
+
+/* Captura os formulários antes dos handlers locais quando há conexão configurada. */
+document.querySelector('#news-form').addEventListener('submit', async (event) => {
+  if (!remoteEnabled()) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  const form = event.currentTarget; if (!form.reportValidity()) return;
+  const data = new FormData(form);
+  try {
+    await supabase.createNews({ title: data.get('title').trim(), date: data.get('date'), content: data.get('content').trim(), important: data.has('important') });
+    newsItems = await supabase.loadNews(); renderNews(); form.reset(); setFeedback(document.querySelector('#news-feedback'), 'Notícia publicada no Supabase.', 'success');
+  } catch (error) { setFeedback(document.querySelector('#news-feedback'), error.message, 'error'); }
+}, true);
+
+newsList.addEventListener('click', async (event) => {
+  if (!remoteEnabled()) return;
+  const button = event.target.closest('[data-remove-news]'); if (!button) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  if (!window.confirm('Deseja remover esta notícia compartilhada?')) return;
+  try { await supabase.deleteNews(button.dataset.removeNews); newsItems = await supabase.loadNews(); renderNews(); }
+  catch (error) { window.alert(error.message); }
+}, true);
+
+document.querySelector('#match-form').addEventListener('submit', async (event) => {
+  if (!remoteEnabled()) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  const form = event.currentTarget; if (!form.reportValidity()) return;
+  const data = new FormData(form);
+  try {
+    await supabase.createMatch({ date: data.get('date'), time: data.get('time'), sport: data.get('sport').trim(), home: data.get('home').trim(), away: data.get('away').trim(), location: data.get('location').trim() });
+    matches = await supabase.loadMatches(); renderSchedule(); form.reset(); setFeedback(document.querySelector('#match-feedback'), 'Partida cadastrada no Supabase.', 'success');
+  } catch (error) { setFeedback(document.querySelector('#match-feedback'), error.message, 'error'); }
+}, true);
+
+document.querySelector('#score-form').addEventListener('submit', async (event) => {
+  if (!remoteEnabled()) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  const form = event.currentTarget; if (!form.reportValidity()) return;
+  const data = new FormData(form); const homeScore = Number(data.get('homeScore')); const awayScore = Number(data.get('awayScore'));
+  if (!Number.isInteger(homeScore) || !Number.isInteger(awayScore) || homeScore < 0 || awayScore < 0 || homeScore > 99 || awayScore > 99) { setFeedback(document.querySelector('#score-feedback'), 'Informe placares inteiros entre 0 e 99.', 'error'); return; }
+  try {
+    await supabase.saveResult(data.get('matchId'), homeScore, awayScore);
+    matches = await supabase.loadMatches(); renderSchedule(); form.reset(); setFeedback(document.querySelector('#score-feedback'), 'Resultado salvo no Supabase.', 'success');
+  } catch (error) { setFeedback(document.querySelector('#score-feedback'), error.message, 'error'); }
+}, true);
+
+loadSharedData();
+
 renderNews();
 renderSchedule();
 getLocalPhotos().then(renderPhotos).catch((error) => {

@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="js/supabase-config.js" defer></script>
+  <script src="js/supabase-client.js" defer></script>
   <script src="js/app.js" defer></script>
 </head>
 <body>
@@ -86,10 +88,20 @@
 
     <section class="section-wrap section-block admin-section" id="admin">
       <div class="admin-card">
-        <div class="admin-copy"><span class="eyebrow">CANTINHO DA ORGANIZAÇÃO</span><h2>Área administrativa</h2><p>Painel demonstrativo. Cadastros e imagens ficam somente neste navegador e não são publicados para outras pessoas.</p><a class="button button-light" href="#admin-tools">Gerenciar conteúdo <span>↓</span></a></div>
+        <div class="admin-copy"><span class="eyebrow">CANTINHO DA ORGANIZAÇÃO</span><h2>Área administrativa</h2><p id="supabase-status">Conexão com Supabase aguardando a chave pública.</p><a class="button button-light" href="#admin-tools">Gerenciar conteúdo <span>↓</span></a></div>
         <div class="admin-preview"><div class="preview-top"><span>PAINEL DO EVENTO</span><span class="preview-dots">● ● ●</span></div><div class="preview-body"><div class="preview-stat"><small>NOTÍCIAS LOCAIS</small><b id="news-count">0</b><span>Salvas neste navegador</span></div><div class="preview-stat"><small>FOTOS LOCAIS</small><b id="photo-count">0</b><span>Armazenamento privado</span></div><div class="preview-stat"><small>PARTIDAS CADASTRADAS</small><b id="match-count">0</b><span>Agenda demonstrativa</span></div><div class="preview-row"><span>Status</span><b>DEMONSTRAÇÃO</b></div></div></div>
       </div>
       <div class="admin-tools" id="admin-tools">
+        <div class="admin-tool-card">
+          <span class="eyebrow">ACESSO DA ORGANIZAÇÃO</span><h3>Entrar no Supabase</h3>
+          <form id="auth-form" class="admin-form">
+            <label for="auth-email">E-mail</label><input id="auth-email" name="email" type="email" autocomplete="email" required>
+            <label for="auth-password">Senha</label><input id="auth-password" name="password" type="password" autocomplete="current-password" required>
+            <button class="button button-light" type="submit">Entrar</button>
+            <button class="text-link" id="auth-signout" type="button" hidden>Sair</button>
+            <p class="form-feedback" id="auth-feedback" aria-live="polite">Somente administradores podem publicar conteúdo compartilhado.</p>
+          </form>
+        </div>
         <div class="admin-tool-card">
           <span class="eyebrow">PUBLICAR AVISO</span><h3>Adicionar notícia</h3>
           <form id="news-form" class="admin-form">
