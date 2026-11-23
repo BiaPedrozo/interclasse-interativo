@@ -6,40 +6,12 @@ const PHOTO_STORE_NAME = 'photos';
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const MATCH_STORAGE_KEY = 'interclasse-demo-matches-v1';
 
-const starterMatches = [
-  { id: 'game-upcoming-1', date: '2026-10-29', time: '14:30', sport: 'Futsal', home: '8º A', away: '8º B', location: 'Quadra principal', status: 'scheduled' },
-  { id: 'game-upcoming-2', date: '2026-10-30', time: '15:15', sport: 'Vôlei', home: '9º A', away: '9º B', location: 'Quadra principal', status: 'scheduled' },
-  { id: 'game-upcoming-3', date: '2026-11-03', time: '13:45', sport: 'Basquete', home: '1º A', away: '1º B', location: 'Pátio coberto', status: 'scheduled' },
-  { id: 'game-completed-1', date: '2026-10-23', time: '14:30', sport: 'Futsal', home: 'Turma Azul', away: 'Turma Laranja', location: 'Quadra principal', status: 'completed', homeScore: 2, awayScore: 1 },
-  { id: 'game-completed-2', date: '2026-10-24', time: '15:15', sport: 'Vôlei', home: 'Turma Verde', away: 'Turma Roxo', location: 'Quadra principal', status: 'completed', homeScore: 1, awayScore: 1 },
-];
-
-const starterNews = [
-  {
-    id: 'demo-1',
-    title: 'Está chegando a hora: confira a programação da semana',
-    date: '2026-06-10',
-    content: 'Organize a torcida e acompanhe os horários da rodada de abertura do nosso campeonato demonstrativo.',
-    important: true,
-    demo: true,
-  },
-  {
-    id: 'demo-2',
-    title: 'Vote no destaque do campeonato',
-    date: '2026-06-08',
-    content: 'Votação fictícia para celebrar quem brilha dentro e fora de quadra.',
-    important: false,
-    demo: true,
-  },
-  {
-    id: 'demo-3',
-    title: 'Espírito esportivo em primeiro lugar',
-    date: '2026-06-07',
-    content: 'Respeito, parceria e diversão também fazem parte do placar.',
-    important: false,
-    demo: true,
-  },
-];
+const starterMatches = [];
+const starterNews = [];
+const starterMatchIds = new Set([
+  'game-upcoming-1', 'game-upcoming-2', 'game-upcoming-3',
+  'game-completed-1', 'game-completed-2',
+]);
 
 function setFeedback(element, message, state = '') {
   element.textContent = message;
@@ -76,7 +48,7 @@ function readMatches() {
       return [...starterMatches];
     }
     const matches = JSON.parse(stored);
-    return Array.isArray(matches) ? matches : [...starterMatches];
+    return Array.isArray(matches) ? matches.filter((match) => !starterMatchIds.has(match.id)) : [...starterMatches];
   } catch (error) {
     console.warn('Não foi possível ler o calendário local.', error);
     return [...starterMatches];
@@ -218,7 +190,7 @@ function readNews() {
       return [...starterNews];
     }
     const news = JSON.parse(stored);
-    return Array.isArray(news) ? news : [...starterNews];
+    return Array.isArray(news) ? news.filter((item) => item.demo !== true) : [...starterNews];
   } catch (error) {
     console.warn('Não foi possível ler as notícias locais.', error);
     return [...starterNews];
@@ -245,7 +217,7 @@ function renderNews() {
     const content = escapeHtml(item.content);
     const date = escapeHtml(item.date);
     const id = escapeHtml(item.id);
-    const category = item.demo ? '<span class="news-meta">NOTÍCIA DE DEMONSTRAÇÃO</span>' : '<span class="news-meta">NOTÍCIA LOCAL</span>';
+    const category = '<span class="news-meta">NOTÍCIA DO CAMPEONATO</span>';
     const important = item.important ? '<span class="important-tag">COMUNICADO IMPORTANTE</span>' : '';
     return `<article class="news-card news-managed-card${item.important ? ' is-important' : ''}">
       ${category}<h3>${title}</h3><time datetime="${date}">${escapeHtml(formatDate(item.date))}</time>
@@ -281,7 +253,6 @@ document.querySelector('#news-form').addEventListener('submit', (event) => {
     date: data.get('date'),
     content: data.get('content').trim(),
     important: data.has('important'),
-    demo: false,
   };
   if (!item.title || !item.date || !item.content) {
     setFeedback(document.querySelector('#news-feedback'), 'Preencha título, data e conteúdo.', 'error');
@@ -432,7 +403,7 @@ document.querySelector('#vote-form').addEventListener('submit', (event) => {
   const candidate = document.querySelector('#vote-candidate').value;
   const feedback = document.querySelector('#vote-feedback');
   if (!candidate) return;
-  setFeedback(feedback, `Voto demonstrativo registrado para ${candidate.split(' — ')[0]}.`, 'success');
+  setFeedback(feedback, `Obrigado por reconhecer o talento de ${candidate.split(' — ')[0]}!`, 'success');
 });
 
 /* Integração compartilhada com Supabase. Sem anon key, o modo local continua disponível. */
