@@ -248,3 +248,674 @@ button:disabled,select:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:860px){.main-nav{display:none;position:absolute;top:76px;left:0;right:0;height:auto;padding:10px 24px 18px;align-items:stretch;flex-direction:column;gap:0;border-top:1px solid #293953;background:var(--navy)}.main-nav.is-open{display:flex}.main-nav a{padding:12px 5px;border-bottom:1px solid #293953}.main-nav .nav-admin{margin-top:8px;text-align:center}.menu-toggle{display:grid;gap:5px;padding:10px}.menu-toggle span{width:21px;height:2px;background:#fff;display:block}}
 @media(max-width:720px){.quick-stats{grid-template-columns:repeat(2,1fr)}.quick-stat:nth-child(2){border-right:0}.quick-stat:nth-child(-n+2){border-bottom:1px solid var(--line)}.home-dashboard{grid-template-columns:repeat(2,minmax(0,1fr))}.team-grid{grid-template-columns:1fr}.prediction-panel{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-card{grid-template-columns:1fr}.profile-admin-row{grid-template-columns:1fr 1fr}.profile-admin-row>b{grid-column:1/-1}.admin-workspace-heading{align-items:flex-start;flex-direction:column}}
 @media(max-width:520px){.inline-form{grid-template-columns:1fr}.inline-form .button,.inline-form .form-feedback{grid-column:auto}.filter-row{display:grid;grid-template-columns:1fr 1fr}.filter-row label{align-self:end}.gallery-grid{grid-template-columns:1fr}.gallery-uploaded img,.gallery-uploaded video{height:210px}.chart-row{grid-template-columns:90px 1fr 70px;gap:7px}.standings-table th,.standings-table td{padding:11px 9px}.admin-tool-card{padding:18px}.admin-section .admin-card{padding:23px 18px}.split-fields{grid-template-columns:1fr}.quick-stat{padding:15px}.quick-stat strong{font-size:23px}.home-dashboard{grid-template-columns:1fr}.main-nav{top:66px}}
+
+:root {
+  --navy: #101522;
+  --navy2: #1a2231;
+  --orange: #1769FF;
+  --cream: #151b28;
+  --white: #FFFFFF;
+  --muted: #8993A5;
+  --line: #2b3445;
+  --blue: #1769FF;
+  --yellow: #F5B700;
+  --surface: #171e2b;
+  --surface-raised: #1c2534;
+  --surface-soft: #141a25;
+  --font: 'DM Sans', sans-serif;
+  --display: 'Space Grotesk', sans-serif;
+}
+
+html {
+  color-scheme: dark;
+  scrollbar-color: #3a465b var(--navy);
+}
+
+body {
+  background: var(--navy);
+  color: var(--white);
+}
+
+::selection {
+  color: var(--white);
+  background: var(--blue);
+}
+
+.skip-link {
+  z-index: 20;
+  color: var(--white);
+  background: var(--surface-raised);
+  border: 1px solid var(--blue);
+  border-radius: 6px;
+}
+
+.site-header,
+.ticker,
+.admin-section {
+  background: var(--navy);
+}
+
+.site-header {
+  border-bottom: 1px solid #ffffff0d;
+  box-shadow: 0 8px 26px #05081140;
+}
+
+.brand-mark {
+  color: var(--white);
+  background: var(--blue);
+  filter: drop-shadow(0 0 10px #1769ff55);
+}
+
+.brand-light,
+.main-nav,
+.ticker p,
+.hero-note {
+  color: var(--muted);
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible,
+.main-nav .nav-admin span,
+.hero .eyebrow,
+.hero h1 span,
+.vote-copy h2 span,
+.text-link:hover,
+.ticker p a,
+.ticker-star,
+.team-gallery-link,
+.home-panel .text-link,
+.results-strip > a {
+  color: var(--blue);
+}
+
+.main-nav .nav-admin {
+  border-color: var(--line);
+  border-radius: 8px;
+  transition: border-color .2s, background .2s;
+}
+
+.main-nav .nav-admin:hover {
+  border-color: var(--blue);
+  background: #1769ff18;
+}
+
+.hero h1,
+.section-heading h2,
+.admin-copy h2,
+.subsection-heading h3,
+.team-card-top h3,
+.match-card,
+.news-card,
+.poll-card h3,
+.spotlight-card h3,
+.stat-card strong,
+.team-slogan,
+.admin-workspace-heading h3 {
+  color: var(--white);
+}
+
+.eyebrow,
+.field-hint,
+.storage-note,
+.section-note,
+.subsection-heading > span,
+.hero-copy > p,
+.hero-note,
+.match-date,
+.match-bottom,
+.match-bottom b,
+.team-small,
+.team small,
+.team-modalities,
+.team-unset,
+.team-facts,
+.poll-dates,
+.spotlight-card p,
+.news-managed-card p,
+.news-managed-card time,
+.spotlight-card small,
+.wall-card time,
+.stat-card span,
+.leader-card > span:nth-of-type(2),
+.result-item small,
+.results-strip,
+.admin-list-row small,
+.admin-lock {
+  color: var(--muted);
+}
+
+.hero .eyebrow,
+.admin-workspace-heading .eyebrow,
+.prediction-panel .eyebrow {
+  color: var(--blue);
+}
+
+.live-dot {
+  background: var(--blue);
+  box-shadow: 0 0 0 4px #1769ff20, 0 0 14px #1769ff80;
+}
+
+.hero-copy > p {
+  color: var(--muted);
+}
+
+.hero-art {
+  border: 1px solid #1769ff45;
+  border-radius: 14px;
+  background:
+    radial-gradient(ellipse at 76% 21%, #1769ff3a, transparent 34%),
+    linear-gradient(140deg, #1a2639, #101522 72%);
+  box-shadow: inset 0 0 60px #1769ff0d, 0 20px 55px #05081155;
+}
+
+.hero-art:before,
+.hero-art:after,
+.art-lines,
+.art-lines:before,
+.art-lines:after {
+  border-color: #8993a540;
+}
+
+.hero-art:before,
+.hero-art:after {
+  background: #1769ff55;
+}
+
+.art-sun {
+  background: var(--yellow);
+  opacity: .76;
+  box-shadow: 0 0 70px #f5b70055;
+}
+
+.art-label,
+.art-score {
+  color: var(--white);
+}
+
+.art-score {
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.art-score span,
+.art-score small {
+  color: var(--muted);
+}
+
+.art-score i {
+  color: var(--blue);
+}
+
+.art-ball {
+  filter: drop-shadow(0 18px 22px #05081188) saturate(.72);
+}
+
+.ticker {
+  border-block: 1px solid var(--line);
+}
+
+.ticker-tag {
+  color: var(--white);
+  background: var(--blue);
+  border-radius: 5px;
+}
+
+.section-wrap,
+.section-block,
+.hero,
+.quick-stats,
+.home-dashboard {
+  color: var(--white);
+}
+
+.section-heading h2,
+.admin-copy h2 {
+  color: var(--white);
+}
+
+.section-heading .eyebrow,
+.home-panel .eyebrow {
+  color: var(--blue);
+}
+
+.quick-stats,
+.home-panel,
+.match-card,
+.team-card,
+.table-wrap,
+.prediction-result-card,
+.poll-card,
+.gallery-uploaded,
+.news-card,
+.spotlight-card,
+.wall-card,
+.stat-card,
+.leader-card,
+.admin-card,
+.admin-tool-card {
+  color: var(--white);
+  background: var(--surface);
+  border-color: var(--line);
+  box-shadow: 0 12px 30px #05081120;
+}
+
+.home-panel,
+.match-card,
+.team-card,
+.poll-card,
+.spotlight-card,
+.admin-tool-card,
+.stat-card,
+.leader-card,
+.prediction-result-card,
+.gallery-uploaded,
+.news-card {
+  border-radius: 10px;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+
+.home-panel:hover,
+.match-card:hover,
+.team-card:hover,
+.poll-card:hover,
+.spotlight-card:hover,
+.gallery-uploaded:hover {
+  transform: translateY(-2px);
+  border-color: #1769ff77;
+  box-shadow: 0 16px 34px #05081138;
+}
+
+.home-panel p,
+.home-rank,
+.home-panel div > b {
+  color: var(--white);
+}
+
+.home-rank b,
+.quick-stat strong,
+.points-cell,
+.leader-card strong {
+  color: var(--yellow);
+}
+
+.team-card {
+  border-top-color: var(--team-color);
+  box-shadow: 0 12px 30px #05081124;
+}
+
+.team-crest {
+  background: color-mix(in srgb, var(--team-color) 20%, var(--surface-raised));
+}
+
+.team-war-cry,
+.wall-class {
+  color: var(--team-color);
+}
+
+.team-facts,
+.team-modalities,
+.team-roster,
+.team-roster ul {
+  color: var(--muted);
+}
+
+.team-roster summary,
+.admin-tool-card summary {
+  color: var(--white);
+}
+
+.team-facts,
+.match-bottom,
+.news-card-actions,
+.admin-subform,
+.admin-list-row,
+.profile-admin-row {
+  border-color: var(--line);
+}
+
+.match-status,
+.status-soft,
+.poll-state {
+  color: var(--muted);
+  background: var(--surface-raised);
+}
+
+.featured-match {
+  border-color: #1769ff88;
+  box-shadow: 0 8px 24px #1769ff16;
+}
+
+.results-strip,
+.prediction-result-card {
+  color: var(--white);
+  background: var(--surface-raised);
+}
+
+.results-strip > div:first-child b,
+.result-item span,
+.result-item span b {
+  color: var(--white);
+}
+
+.result-item {
+  border-color: var(--line);
+}
+
+.news-section,
+.gallery-section,
+.participation-section,
+.wall-section {
+  background: var(--surface-soft);
+}
+
+.news-card,
+.news-main {
+  background: var(--surface);
+}
+
+.news-card.is-important {
+  border-color: #f5b70088;
+  background: #f5b7000a;
+}
+
+.news-meta,
+.important-tag {
+  color: var(--yellow);
+}
+
+.important-tag {
+  background: #f5b7001f;
+  border-radius: 5px;
+}
+
+.empty-state {
+  color: var(--muted);
+  background: #171e2b;
+  border-color: #3a465b;
+  border-radius: 9px;
+}
+
+.gallery-uploaded figcaption {
+  color: var(--white);
+  background: var(--surface);
+}
+
+.gallery-uploaded figcaption span {
+  color: var(--muted);
+}
+
+.standings-table {
+  color: var(--white);
+  background: var(--surface);
+}
+
+.standings-table th,
+.standings-table td {
+  color: var(--white);
+  border-color: var(--line);
+}
+
+.standings-table thead th {
+  color: var(--muted);
+  background: var(--surface-raised);
+}
+
+.rank-number {
+  color: var(--white);
+  background: #1769ff24;
+}
+
+.standings-table tbody tr:first-child .rank-number {
+  color: #101522;
+  background: var(--yellow);
+}
+
+.standings-table tbody tr:first-child .table-team {
+  color: var(--yellow);
+}
+
+.prediction-panel {
+  background:
+    radial-gradient(ellipse at 100% 0, #1769ff22, transparent 55%),
+    var(--surface-raised);
+  border: 1px solid var(--line);
+}
+
+.prediction-panel p {
+  color: var(--muted);
+}
+
+.poll-open {
+  color: var(--yellow);
+  background: #f5b70018;
+}
+
+.poll-option {
+  color: var(--white);
+  background: var(--surface-soft);
+  border-color: var(--line);
+}
+
+.poll-option input {
+  accent-color: var(--blue);
+}
+
+.poll-option:has(input:checked) {
+  border-color: var(--blue);
+  background: #1769ff15;
+}
+
+.poll-options-readonly span,
+.admin-account-note:not(:empty) {
+  color: var(--muted);
+  background: var(--surface-raised);
+}
+
+.chart-track {
+  background: #8993a528;
+}
+
+.chart-track i {
+  background: var(--team-color, var(--blue));
+}
+
+.filter-row label,
+.wall-form label,
+.admin-form > label,
+.split-fields > label,
+.checkbox-label {
+  color: var(--muted);
+}
+
+.filter-row select,
+.filter-row input,
+.inline-form select,
+.admin-form select,
+.admin-form input:not([type=checkbox]):not([type=file]),
+.admin-form textarea,
+.admin-form input[type=file],
+.split-fields input,
+.split-fields select,
+.profile-admin-row select,
+.wall-form textarea {
+  color: var(--white);
+  background-color: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+
+select option {
+  color: var(--white);
+  background: var(--surface-raised);
+}
+
+.filter-row input::placeholder,
+.admin-form input::placeholder,
+.admin-form textarea::placeholder {
+  color: var(--muted);
+}
+
+.admin-form input:focus,
+.admin-form select:focus,
+.admin-form textarea:focus,
+.filter-row select:focus,
+.filter-row input:focus,
+.inline-form select:focus,
+.split-fields input:focus,
+.split-fields select:focus,
+.wall-form textarea:focus {
+  outline: 2px solid #1769ff66;
+  border-color: var(--blue);
+}
+
+input[type=checkbox],
+input[type=radio] {
+  accent-color: var(--blue);
+}
+
+.button,
+button {
+  border-radius: 8px;
+}
+
+.button-orange {
+  color: var(--white);
+  background: var(--blue);
+  box-shadow: 0 5px 16px #1769ff30;
+}
+
+.button-orange:hover {
+  color: var(--white);
+  background: #347dff;
+  box-shadow: 0 8px 22px #1769ff4a;
+}
+
+.button-light {
+  color: var(--white);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+}
+
+.button-light:hover {
+  color: var(--white);
+  border-color: var(--blue);
+  background: #1769ff18;
+}
+
+.button:focus-visible,
+.text-link:focus-visible,
+.main-nav a:focus-visible,
+.menu-toggle:focus-visible,
+.poll-option:has(input:focus-visible) {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+.text-link,
+.team-gallery-link {
+  color: var(--blue);
+}
+
+.admin-section {
+  color: var(--white);
+}
+
+.admin-card {
+  background: var(--surface-raised);
+  border-color: var(--line);
+}
+
+.admin-preview {
+  border-color: var(--line);
+  background: var(--navy);
+}
+
+.preview-top,
+.preview-stat small,
+.preview-stat span,
+.preview-row span {
+  color: var(--muted);
+}
+
+.preview-stat,
+.preview-row {
+  background: var(--surface);
+}
+
+.preview-stat b {
+  color: var(--yellow);
+}
+
+.preview-row b {
+  color: var(--white);
+}
+
+.admin-tool-card {
+  color: var(--white);
+  background: var(--surface);
+}
+
+.admin-tool-card h3,
+.admin-tool-card h4,
+.admin-tool-card b {
+  color: var(--white);
+}
+
+.admin-tool-card input[type=color] {
+  background: var(--surface-soft);
+  border-color: var(--line);
+}
+
+.admin-account-note:not(:empty) {
+  color: var(--white);
+  background: var(--surface-raised);
+}
+
+.admin-section .storage-note,
+.admin-copy p,
+.admin-lock {
+  color: var(--muted);
+}
+
+.danger-link,
+.remove-button {
+  color: #ff8a80;
+}
+
+.form-feedback.is-error,
+.admin-form .form-feedback.is-error {
+  color: #ff9a91;
+}
+
+.form-feedback.is-success {
+  color: #78d6a6;
+}
+
+.admin-form .button {
+  margin-top: 5px;
+}
+
+@media (max-width: 860px) {
+  .main-nav {
+    background: var(--navy);
+    border-color: var(--line);
+    box-shadow: 0 16px 24px #05081155;
+  }
+
+  .main-nav a {
+    border-color: var(--line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
