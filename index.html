@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101e38">
-  <meta name="description" content="Acompanhe o calendário, as notícias e os resultados do campeonato interclasse.">
-  <title>Interclasse Interativo | Campeonato escolar</title>
+  <meta name="description" content="Central oficial do Interclasse 2026 do Colégio Sinerge: agenda, resultados, turmas, notícias e participação.">
+  <title>INTERCLASSE 2026 | Colégio Sinerge</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -18,14 +18,16 @@
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#inicio" aria-label="Interclasse Interativo, início">
+      <a class="brand" href="#inicio" aria-label="Interclasse 2026, início">
         <span class="brand-mark" aria-hidden="true">✦</span>
-        <span>INTERCLASSE<span class="brand-light">INTERATIVO</span></span>
+        <span>INTERCLASSE<span class="brand-light">COLÉGIO SINERGE · 2026</span></span>
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
       <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
-        <a href="#inicio">Início</a><a href="#noticias">Notícias</a><a href="#galeria">Galeria</a><a href="#calendario">Jogos</a>
-        <a class="nav-admin" href="#admin">Área admin <span aria-hidden="true">↗</span></a>
+        <a href="#inicio">Início</a><a href="#turmas">Turmas</a><a href="#calendario">Jogos</a>
+        <a href="#classificacao">Classificação</a><a href="#participacao">Votações</a>
+        <a href="#galeria">Galeria</a><a href="#noticias">Comunicados</a>
+        <a class="nav-admin" href="#admin">Acesso <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>
@@ -33,111 +35,290 @@
   <main id="conteudo">
     <section class="hero section-wrap" id="inicio">
       <div class="hero-copy">
-        <div class="eyebrow"><span class="live-dot"></span> ESPÍRITO DE EQUIPE EM QUADRA</div>
-        <h1>O jogo fica<br>melhor <span>juntos.</span></h1>
-        <p>Torça pela sua turma, acompanhe cada partida e celebre quem faz o campeonato acontecer.</p>
-        <div class="hero-actions"><a class="button button-orange" href="#calendario">Ver próximos jogos <span>→</span></a><a class="text-link" href="#noticias">Últimas novidades <span>↗</span></a></div>
-        <div class="hero-note"><span class="note-icon">i</span> Informação, esporte e torcida em um só lugar.</div>
-      </div>
-      <div class="hero-art" aria-label="Ilustração de uma bola de futebol em campo">
-        <div class="art-sun"></div><div class="art-lines"></div><div class="art-ball">⚽</div>
-        <div class="art-label"><span>ESPÍRITO DE EQUIPE</span><b>JOGA JUNTO.</b></div>
-        <div class="art-score"><span>ESPÍRITO ESPORTIVO</span><strong>JOGO <i>·</i> UNIÃO</strong><small>RESPEITO E ALEGRIA EM CADA PARTIDA</small></div>
-      </div>
-    </section>
-
-    <section class="ticker" aria-label="Aviso"><div class="ticker-inner"><span class="ticker-tag">AVISO</span><p>Acompanhe a programação, convide a torcida e venha celebrar cada lance! <a href="#calendario">Ver calendário →</a></p><span class="ticker-star">✳</span></div></section>
-
-    <section class="section-wrap section-block" id="calendario">
-      <div class="section-heading"><div><span class="eyebrow">AGENDA DO CAMPEONATO</span><h2>Calendário de jogos</h2></div><span class="demo-label">AGENDA</span></div>
-      <div class="schedule-group"><div class="subsection-heading"><h3>Próximas partidas</h3><span>Partidas agendadas</span></div><div class="match-grid" id="upcoming-match-grid" aria-live="polite"></div><p class="empty-state" id="upcoming-empty" hidden>Nenhuma partida agendada.</p></div>
-      <div class="schedule-group" id="pending-group" hidden><div class="subsection-heading"><h3>Aguardando resultado</h3><span>Partidas passadas sem placar</span></div><div class="match-grid" id="pending-match-grid"></div></div>
-      <div class="schedule-group results-group" id="resultados"><div class="subsection-heading"><div><h3>Resultados anteriores</h3><span>Placares registrados pela organização</span></div><span class="demo-label">RESULTADOS</span></div><div class="match-grid" id="completed-match-grid" aria-live="polite"></div><p class="empty-state" id="completed-empty" hidden>Nenhum resultado cadastrado.</p></div>
-    </section>
-
-    <section class="news-section" id="noticias">
-      <div class="section-wrap section-block">
-        <div class="section-heading">
-          <div><span class="eyebrow">FICA POR DENTRO</span><h2>Notícias & comunicados</h2></div>
-          <span class="demo-label">COMUNICADOS</span>
+        <div class="eyebrow"><span class="live-dot"></span><span id="school-name">COLÉGIO SINERGE</span></div>
+        <h1 id="event-name">INTERCLASSE<br><span>2026.</span></h1>
+        <p id="event-tagline">Três turmas. Uma competição. Uma história para contar.</p>
+        <div class="hero-actions">
+          <a class="button button-orange" href="#calendario">Acompanhar jogos <span>→</span></a>
+          <a class="text-link" href="#participacao">Participar <span>↗</span></a>
         </div>
-        <div class="news-grid news-managed" id="news-list" aria-live="polite"></div>
-        <p class="empty-state" id="news-empty" hidden>Nenhuma notícia publicada.</p>
+        <div class="hero-note"><span class="note-icon">◷</span><span id="countdown" aria-live="polite">A data de início será informada pela organização.</span></div>
+      </div>
+      <div class="hero-art" aria-label="Arte esportiva do Interclasse 2026">
+        <div class="art-sun"></div><div class="art-lines"></div><div class="art-ball" aria-hidden="true">⚽</div>
+        <div class="art-label"><span>TRÊS TURMAS</span><b>UM SÓ JOGO.</b></div>
+        <div class="art-score"><span>COLÉGIO SINERGE</span><strong>INTER<i>·</i>CLASSE</strong><small>ESPORTE · UNIÃO · RESPEITO</small></div>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="Aviso da organização">
+      <div class="ticker-inner"><span class="ticker-tag">OFICIAL</span><p id="ticker-message">Agenda, resultados e comunicados publicados pela organização do Interclasse.</p><span class="ticker-star" aria-hidden="true">✳</span></div>
+    </section>
+
+    <section class="quick-stats section-wrap" aria-label="Resumo do campeonato">
+      <a class="quick-stat" href="#calendario"><strong id="stat-games">0</strong><span>jogos realizados</span></a>
+      <a class="quick-stat" href="#classificacao"><strong id="stat-points">0</strong><span>gols ou pontos</span></a>
+      <a class="quick-stat" href="#turmas"><strong id="stat-athletes">0</strong><span>atletas cadastrados</span></a>
+      <a class="quick-stat" href="#participacao"><strong id="stat-votes">0</strong><span>votos registrados</span></a>
+    </section>
+    <section class="home-dashboard section-wrap" aria-label="Destaques do campeonato">
+      <article class="home-panel"><span class="eyebrow">PRÓXIMO JOGO</span><div id="home-next-match"><p class="field-hint">Nenhuma partida agendada.</p></div><a class="text-link" href="#calendario">Ver calendário →</a></article>
+      <article class="home-panel"><span class="eyebrow">ÚLTIMO COMUNICADO</span><div id="home-latest-news"><p class="field-hint">Nenhum comunicado publicado.</p></div><a class="text-link" href="#noticias">Ver comunicados →</a></article>
+      <article class="home-panel"><span class="eyebrow">VOTAÇÃO</span><div id="home-active-poll"><p class="field-hint">Nenhuma enquete aberta.</p></div><a class="text-link" href="#participacao">Participar →</a></article>
+      <article class="home-panel"><span class="eyebrow">CLASSIFICAÇÃO</span><div id="home-ranking"><p class="field-hint">Aguardando resultados oficiais.</p></div><a class="text-link" href="#classificacao">Ver tabela →</a></article>
+    </section>
+
+    <section class="section-wrap section-block" id="turmas">
+      <div class="section-heading"><div><span class="eyebrow">IDENTIDADE E ELENCO</span><h2>As turmas</h2></div><span class="section-note">Ensino Médio · 2026</span></div>
+      <p class="field-hint">As cores de exibição são personalizáveis e ainda precisam de confirmação da organização.</p>
+      <div class="team-grid" id="team-list" aria-live="polite"></div>
+      <p class="empty-state" id="team-empty" hidden>As informações das turmas serão disponibilizadas pela organização.</p>
+    </section>
+
+    <section class="news-section" id="calendario">
+      <div class="section-wrap section-block">
+        <div class="section-heading"><div><span class="eyebrow">ACOMPANHE CADA CONFRONTO</span><h2>Calendário e resultados</h2></div><span class="section-note">Atualizado pela organização</span></div>
+        <div class="subsection-heading"><h3>Próximos jogos</h3><span>Data, horário, modalidade e local</span></div>
+        <div class="match-grid" id="upcoming-match-grid" aria-live="polite"></div>
+        <p class="empty-state" id="upcoming-empty" hidden>Nenhum jogo agendado.</p>
+        <div class="subsection-heading results-heading"><h3>Resultados</h3><span>Partidas encerradas</span></div>
+        <div class="match-grid" id="completed-match-grid" aria-live="polite"></div>
+        <p class="empty-state" id="completed-empty" hidden>Nenhum resultado cadastrado.</p>
+      </div>
+    </section>
+
+    <section class="section-wrap section-block" id="classificacao">
+      <div class="section-heading"><div><span class="eyebrow">PONTUAÇÃO GERAL</span><h2>Classificação</h2></div><span class="section-note">Somatório das modalidades</span></div>
+      <div class="table-wrap">
+        <table class="standings-table">
+          <caption class="sr-only">Classificação geral das três turmas</caption>
+          <thead><tr><th scope="col">Pos.</th><th scope="col">Turma</th><th scope="col">J</th><th scope="col">V</th><th scope="col">E</th><th scope="col">D</th><th scope="col">Saldo</th><th scope="col">Pts.</th></tr></thead>
+          <tbody id="standings-list"></tbody>
+        </table>
+      </div>
+      <p class="empty-state" id="standings-empty" hidden>A classificação será calculada quando os resultados forem cadastrados.</p>
+      <div class="prediction-panel">
+        <div><span class="eyebrow">PALPITE DO DIA</span><h3>Quem vence o próximo jogo?</h3><p>Um palpite por estudante em cada partida. As respostas são reveladas após o resultado.</p></div>
+        <form class="inline-form" id="prediction-form">
+          <label for="prediction-match">Partida</label><select id="prediction-match" required><option value="">Nenhuma partida disponível</option></select>
+          <label for="prediction-team">Seu palpite</label><select id="prediction-team" required><option value="">Selecione uma partida</option></select>
+          <button class="button button-orange" type="submit">Enviar palpite <span>→</span></button>
+          <p class="form-feedback" id="prediction-feedback" aria-live="polite"></p>
+        </form>
+      </div>
+      <div id="prediction-results" class="prediction-results" aria-live="polite"></div>
+    </section>
+
+    <section class="participation-section" id="participacao">
+      <div class="section-wrap section-block">
+        <div class="section-heading"><div><span class="eyebrow">A VOZ DAS TURMAS</span><h2>Enquetes e votações</h2></div><span class="section-note">Um voto por estudante</span></div>
+        <div class="poll-grid" id="poll-list" aria-live="polite"></div>
+        <p class="empty-state" id="poll-empty" hidden>As enquetes serão publicadas pela organização.</p>
       </div>
     </section>
 
     <section class="gallery-section" id="galeria">
       <div class="section-wrap section-block">
-        <div class="section-heading"><div><span class="eyebrow">FOTOS DO CAMPEONATO</span><h2>Galeria</h2></div><span class="gallery-note">FOTOS NESTE NAVEGADOR</span></div>
-        <div class="gallery-grid" id="gallery-list"></div>
-        <p class="empty-state" id="gallery-empty">Nenhuma foto cadastrada neste navegador.</p>
+        <div class="section-heading"><div><span class="eyebrow">REGISTROS DO INTERCLASSE</span><h2>Fotos e vídeos</h2></div><span class="section-note">Publicados pela organização</span></div>
+        <div class="filter-row">
+          <label for="gallery-category">Categoria</label><select id="gallery-category"><option value="">Todas</option><option value="partida">Partidas</option><option value="torcida">Torcida</option><option value="bastidores">Bastidores</option><option value="premiacao">Premiações</option><option value="outro">Outros</option></select>
+          <label for="gallery-class">Turma</label><select id="gallery-class"><option value="">Todas</option></select>
+          <label for="gallery-modality">Modalidade</label><select id="gallery-modality"><option value="">Todas</option></select>
+          <label for="gallery-day">Dia</label><input id="gallery-day" type="date">
+        </div>
+        <div class="gallery-grid" id="gallery-list" aria-live="polite"></div>
+        <p class="empty-state" id="gallery-empty" hidden>Nenhuma foto ou vídeo publicado.</p>
       </div>
     </section>
 
-    <section class="section-wrap section-block admin-section" id="admin">
-      <div class="admin-card">
-        <div class="admin-copy"><span class="eyebrow">ORGANIZAÇÃO DO CAMPEONATO</span><h2>Área administrativa</h2><p id="supabase-status">Conexão com o banco de dados aguardando configuração.</p><a class="button button-light" href="#admin-tools">Gerenciar conteúdo <span>↓</span></a></div>
-        <div class="admin-preview"><div class="preview-top"><span>PAINEL DO CAMPEONATO</span><span class="preview-dots">● ● ●</span></div><div class="preview-body"><div class="preview-stat"><small>NOTÍCIAS</small><b id="news-count">0</b><span>Comunicados publicados</span></div><div class="preview-stat"><small>FOTOS</small><b id="photo-count">0</b><span>Registros da torcida</span></div><div class="preview-stat"><small>PARTIDAS CADASTRADAS</small><b id="match-count">0</b><span>Agenda do campeonato</span></div><div class="preview-row"><span>Status</span><b>ORGANIZAÇÃO</b></div></div></div>
+    <section class="section-wrap section-block" id="noticias">
+      <div class="section-heading"><div><span class="eyebrow">INFORMAÇÃO OFICIAL</span><h2>Comunicados e notícias</h2></div><span class="section-note">Publicações recentes</span></div>
+      <div class="news-grid news-managed" id="news-list" aria-live="polite"></div>
+      <p class="empty-state" id="news-empty" hidden>Nenhum comunicado publicado.</p>
+    </section>
+
+    <section class="news-section" id="especiais">
+      <div class="section-wrap section-block">
+        <div class="section-heading"><div><span class="eyebrow">HISTÓRIAS DA COMPETIÇÃO</span><h2>Quadros especiais</h2></div><span class="section-note">Conteúdo publicado pela organização</span></div>
+        <div class="spotlight-grid" id="spotlight-list" aria-live="polite"></div>
+        <p class="empty-state" id="spotlight-empty" hidden>Nenhum destaque publicado.</p>
       </div>
-      <div class="admin-tools" id="admin-tools">
-        <div class="admin-tool-card">
-          <span class="eyebrow">ACESSO DA ORGANIZAÇÃO</span><h3>Entrar como administrador</h3>
-          <form id="auth-form" class="admin-form">
-            <label for="auth-email">E-mail</label><input id="auth-email" name="email" type="email" autocomplete="email" required>
-            <label for="auth-password">Senha</label><input id="auth-password" name="password" type="password" autocomplete="current-password" required>
-            <button class="button button-light" type="submit">Entrar</button>
-            <button class="text-link" id="auth-signout" type="button" hidden>Sair</button>
-            <p class="form-feedback" id="auth-feedback" aria-live="polite">Somente administradores podem publicar conteúdo compartilhado.</p>
-          </form>
+    </section>
+
+    <section class="wall-section" id="mural">
+      <div class="section-wrap section-block">
+        <div class="section-heading"><div><span class="eyebrow">MENSAGENS DE INCENTIVO</span><h2>Mural das turmas</h2></div><span class="section-note">Publicação após moderação</span></div>
+        <div class="wall-grid" id="wall-list" aria-live="polite"></div>
+        <p class="empty-state" id="wall-empty" hidden>Nenhuma mensagem publicada.</p>
+        <form class="wall-form" id="wall-form" hidden>
+          <label for="wall-message">Deixe uma mensagem de incentivo</label>
+          <textarea id="wall-message" maxlength="280" rows="3" required placeholder="Escreva com respeito e espírito esportivo"></textarea>
+          <button class="button button-orange" type="submit">Enviar para moderação <span>→</span></button>
+          <p class="form-feedback" id="wall-feedback" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section-wrap section-block" id="estatisticas">
+      <div class="section-heading"><div><span class="eyebrow">NÚMEROS DO CAMPEONATO</span><h2>Estatísticas</h2></div><span class="section-note">Dados cadastrados no sistema</span></div>
+      <div class="stats-grid" id="statistics-list"></div>
+      <div class="individual-highlights" id="individual-highlights"></div>
+      <div class="class-chart" id="class-chart" aria-label="Vitórias por turma"></div>
+      <p class="empty-state" id="statistics-empty" hidden>As estatísticas aparecem conforme os dados forem cadastrados.</p>
+    </section>
+
+    <section class="admin-section" id="admin">
+      <div class="section-wrap section-block">
+        <div class="admin-card">
+          <div class="admin-copy"><span class="eyebrow">ORGANIZAÇÃO</span><h2>Painel do campeonato</h2><p id="connection-status" role="status">Conectando ao banco de dados…</p></div>
+          <div class="admin-preview"><div class="preview-top"><span>INTERCLASSE 2026</span><span class="preview-dots">● ● ●</span></div><div class="preview-body"><div class="preview-stat"><small>JOGOS REALIZADOS</small><b id="admin-game-count">0</b><span>Resultados registrados</span></div><div class="preview-stat"><small>PUBLICAÇÕES</small><b id="admin-news-count">0</b><span>Comunicados ativos</span></div><div class="preview-row"><span>Acesso</span><b id="account-role">VISITANTE</b></div></div></div>
         </div>
-        <div class="admin-tool-card">
-          <span class="eyebrow">PUBLICAR AVISO</span><h3>Adicionar notícia</h3>
-          <form id="news-form" class="admin-form">
-            <label for="news-title">Título <span aria-hidden="true">*</span></label><input id="news-title" name="title" maxlength="90" required>
-            <label for="news-date">Data <span aria-hidden="true">*</span></label><input id="news-date" name="date" type="date" required>
-            <label for="news-content">Conteúdo <span aria-hidden="true">*</span></label><textarea id="news-content" name="content" rows="4" maxlength="500" required></textarea>
-            <label class="checkbox-label"><input id="news-important" name="important" type="checkbox"> Destacar como comunicado importante</label>
-            <button class="button button-orange" type="submit">Salvar notícia <span>→</span></button>
-            <p class="form-feedback" id="news-feedback" aria-live="polite">Obrigatórios: título, data e conteúdo.</p>
-          </form>
+
+        <div class="admin-tools" id="auth-tools">
+          <article class="admin-tool-card">
+            <span class="eyebrow">ACESSO DA ORGANIZAÇÃO</span><h3>Entrar</h3>
+            <form id="auth-form" class="admin-form">
+              <label for="auth-email">E-mail</label><input id="auth-email" name="email" type="email" autocomplete="email" required>
+              <label for="auth-password">Senha</label><input id="auth-password" name="password" type="password" autocomplete="current-password" required>
+              <button class="button button-light" type="submit">Entrar como administrador</button>
+              <p class="form-feedback" id="auth-feedback" aria-live="polite"></p>
+            </form>
+            <button class="text-link signout-button" id="auth-signout" type="button" hidden>Sair da conta</button>
+          </article>
+          <article class="admin-tool-card" id="student-signup-card">
+            <span class="eyebrow">PARTICIPAÇÃO ESTUDANTIL</span><h3>Criar conta de estudante</h3>
+            <form id="signup-form" class="admin-form">
+              <label for="signup-name">Nome de exibição</label><input id="signup-name" name="displayName" maxlength="100" autocomplete="name" required>
+              <label for="signup-class">Turma</label><select id="signup-class" name="classId" required><option value="">Selecione sua turma</option></select>
+              <label for="signup-email">E-mail</label><input id="signup-email" name="email" type="email" autocomplete="email" required>
+              <label for="signup-password">Senha</label><input id="signup-password" name="password" type="password" minlength="8" autocomplete="new-password" required>
+              <button class="button button-orange" type="submit">Criar conta</button>
+              <p class="form-feedback" id="signup-feedback" aria-live="polite">Contas novas recebem acesso de estudante; somente a organização pode conceder acesso administrativo.</p>
+            </form>
+          </article>
         </div>
-        <div class="admin-tool-card">
-          <span class="eyebrow">ADICIONAR À GALERIA</span><h3>Selecionar imagens</h3>
-          <form id="photo-form" class="admin-form">
-            <label for="photo-title">Legenda <span aria-hidden="true">*</span></label><input id="photo-title" name="title" maxlength="70" required>
-            <label for="photo-files">Arquivos de imagem <span aria-hidden="true">*</span></label><input id="photo-files" name="photos" type="file" accept="image/*" multiple required>
-            <p class="field-hint">As fotos selecionadas são guardadas neste navegador. Não são enviadas a um servidor.</p>
-            <button class="button button-orange" type="submit">Adicionar fotos <span>→</span></button>
-            <p class="form-feedback" id="photo-feedback" aria-live="polite">Escolha pelo menos uma imagem.</p>
-          </form>
+        <p class="form-feedback admin-account-note" id="account-feedback" aria-live="polite"></p>
+
+        <div class="admin-workspace" id="admin-workspace" hidden>
+          <div class="admin-workspace-heading"><div><span class="eyebrow">FERRAMENTAS RESTRITAS</span><h3>Gerenciar o campeonato</h3></div><span class="admin-lock">Somente administradores</span></div>
+          <div class="admin-tools">
+            <details class="admin-tool-card"><summary>Configurações e data de início</summary>
+              <form id="settings-form" class="admin-form">
+                <label for="settings-event">Nome do campeonato</label><input id="settings-event" name="event_name" maxlength="80" required>
+                <label for="settings-school">Escola</label><input id="settings-school" name="school_name" maxlength="120" required>
+                <label for="settings-tagline">Frase de destaque</label><input id="settings-tagline" name="tagline" maxlength="180" required>
+                <label for="settings-start">Início confirmado</label><input id="settings-start" name="starts_at" type="datetime-local">
+                <p class="field-hint">Deixe a data vazia até que a organização a confirme.</p>
+                <button class="button button-orange" type="submit">Salvar configurações</button><p class="form-feedback" id="settings-feedback" aria-live="polite"></p>
+              </form>
+            </details>
+            <details class="admin-tool-card"><summary>Identidade das turmas</summary><div id="team-settings-list"></div></details>
+            <details class="admin-tool-card"><summary>Modalidades e atletas</summary>
+              <form id="modality-form" class="admin-form">
+                <label for="modality-name">Nova modalidade</label><input id="modality-name" name="name" maxlength="80" required>
+                <label for="modality-score">Unidade de pontuação</label><input id="modality-score" name="score_label" maxlength="30" value="pontos" required>
+                <div class="split-fields"><label>Vitória<input name="points_win" type="number" min="0" max="99" value="3" required></label><label>Empate<input name="points_draw" type="number" min="0" max="99" value="1" required></label><label>Derrota<input name="points_loss" type="number" min="0" max="99" value="0" required></label></div>
+                <button class="button button-orange" type="submit">Cadastrar modalidade</button><p class="form-feedback" id="modality-feedback" aria-live="polite"></p>
+              </form>
+              <form id="athlete-form" class="admin-form admin-subform">
+                <h4>Cadastrar atleta</h4>
+                <label for="athlete-name">Nome</label><input id="athlete-name" name="name" maxlength="120" required>
+                <label for="athlete-class">Turma</label><select id="athlete-class" name="classId" required><option value="">Selecione a turma</option></select>
+                <label for="athlete-modality">Modalidade</label><select id="athlete-modality" name="modalityId" required><option value="">Selecione a modalidade</option></select>
+                <label for="athlete-number">Número da camisa (opcional)</label><input id="athlete-number" name="shirtNumber" type="number" min="0" max="999">
+                <button class="button button-orange" type="submit">Adicionar atleta</button><p class="form-feedback" id="athlete-feedback" aria-live="polite"></p>
+              </form>
+              <h4>Elenco cadastrado</h4><div id="athlete-admin-list" class="admin-list"></div>
+            </details>
+            <details class="admin-tool-card"><summary>Partidas e placares</summary>
+              <form id="match-form" class="admin-form">
+                <h4>Agendar partida</h4>
+                <label for="match-date">Data e horário</label><input id="match-date" name="date" type="date" required>
+                <label for="match-time">Horário</label><input id="match-time" name="time" type="time" required>
+                <label for="match-duration">Duração (minutos)</label><input id="match-duration" name="duration" type="number" min="1" max="360" value="60" required>
+                <label for="match-modality">Modalidade</label><select id="match-modality" name="modalityId" required><option value="">Selecione a modalidade</option></select>
+                <div class="split-fields"><label>Turma mandante<select id="match-home" name="homeClassId" required><option value="">Selecione</option></select></label><label>Turma visitante<select id="match-away" name="awayClassId" required><option value="">Selecione</option></select></label></div>
+                <label for="match-venue">Local</label><input id="match-venue" name="venue" maxlength="120" required>
+                <button class="button button-orange" type="submit">Agendar partida</button><p class="form-feedback" id="match-feedback" aria-live="polite"></p>
+              </form>
+              <form id="score-form" class="admin-form admin-subform">
+                <h4>Registrar ou corrigir placar</h4>
+                <label for="score-match">Partida</label><select id="score-match" name="matchId" required><option value="">Selecione uma partida</option></select>
+                <div class="split-fields"><label>Mandante<input id="score-home" name="homeScore" type="number" min="0" max="999" required></label><label>Visitante<input id="score-away" name="awayScore" type="number" min="0" max="999" required></label></div>
+                <button class="button button-orange" type="submit">Salvar placar</button><p class="form-feedback" id="score-feedback" aria-live="polite"></p>
+              </form>
+              <form id="athlete-score-form" class="admin-form admin-subform">
+                <h4>Registrar pontuação individual</h4>
+                <label for="athlete-score-match">Partida encerrada</label><select id="athlete-score-match" name="matchId" required><option value="">Selecione uma partida encerrada</option></select>
+                <label for="athlete-score-player">Atleta</label><select id="athlete-score-player" name="athleteId" required><option value="">Selecione uma partida</option></select>
+                <label for="athlete-score-value">Gols ou pontos</label><input id="athlete-score-value" name="scoreCount" type="number" min="0" max="999" required>
+                <button class="button button-light" type="submit">Salvar pontuação individual</button><p class="form-feedback" id="athlete-score-feedback" aria-live="polite"></p>
+              </form>
+              <div id="athlete-score-admin-list" class="admin-list"></div>
+              <div id="match-admin-list" class="admin-list"></div>
+            </details>
+            <details class="admin-tool-card"><summary>Comunicados</summary>
+              <form id="news-form" class="admin-form">
+                <input id="news-id" name="id" type="hidden">
+                <label for="news-title">Título</label><input id="news-title" name="title" maxlength="120" required>
+                <label for="news-date">Data de publicação</label><input id="news-date" name="date" type="date" required>
+                <label for="news-content">Conteúdo</label><textarea id="news-content" name="content" rows="4" maxlength="10000" required></textarea>
+                <label class="checkbox-label"><input id="news-featured" name="featured" type="checkbox"> Destacar comunicado</label>
+                <button class="button button-orange" type="submit">Publicar comunicado</button><button class="text-link" id="news-cancel-edit" type="button" hidden>Cancelar edição</button>
+                <p class="form-feedback" id="news-feedback" aria-live="polite"></p>
+              </form>
+              <div id="news-admin-list" class="admin-list"></div>
+            </details>
+            <details class="admin-tool-card"><summary>Enquetes e votação</summary>
+              <form id="poll-form" class="admin-form">
+                <label for="poll-title">Pergunta</label><input id="poll-title" name="title" maxlength="160" required>
+                <label for="poll-category">Categoria</label><select id="poll-category" name="category" required>
+                  <option value="Melhor jogador">Melhor jogador</option><option value="Craque da rodada">Craque da rodada</option><option value="Melhor torcida">Melhor torcida</option><option value="Torcida mais animada">Torcida mais animada</option><option value="Melhor uniforme">Melhor uniforme</option><option value="Melhor grito de guerra">Melhor grito de guerra</option><option value="Revelação do Interclasse">Revelação do Interclasse</option><option value="Melhor fotografia">Melhor fotografia</option><option value="Destaque do campeonato">Destaque do campeonato</option><option value="Outra">Outra</option>
+                </select>
+                <label for="poll-start">Abertura</label><input id="poll-start" name="startsAt" type="datetime-local" required>
+                <label for="poll-end">Encerramento</label><input id="poll-end" name="endsAt" type="datetime-local" required>
+                <button class="button button-orange" type="submit">Criar enquete</button><p class="form-feedback" id="poll-feedback" aria-live="polite"></p>
+              </form>
+              <form id="candidate-form" class="admin-form admin-subform">
+                <h4>Adicionar opção à enquete</h4>
+                <label for="candidate-poll">Enquete</label><select id="candidate-poll" name="pollId" required><option value="">Selecione uma enquete</option></select>
+                <label for="candidate-label">Opção</label><input id="candidate-label" name="label" maxlength="120" required>
+                <button class="button button-light" type="submit">Adicionar opção</button><p class="form-feedback" id="candidate-feedback" aria-live="polite"></p>
+              </form>
+              <div id="poll-admin-list" class="admin-list"></div>
+            </details>
+            <details class="admin-tool-card"><summary>Galeria de fotos e vídeos</summary>
+              <form id="media-form" class="admin-form">
+                <label for="media-caption">Legenda</label><input id="media-caption" name="caption" maxlength="160" required>
+                <label for="media-file">Foto ou vídeo (até 5 MB / 50 MB)</label><input id="media-file" name="file" type="file" accept="image/jpeg,image/png,image/webp,image/avif,video/mp4,video/webm" required>
+                <label for="media-category">Categoria</label><select id="media-category" name="category" required><option value="partida">Partida</option><option value="torcida">Torcida</option><option value="bastidores">Bastidores</option><option value="premiacao">Premiação</option><option value="outro">Outro</option></select>
+                <label for="media-class">Turma (opcional)</label><select id="media-class" name="classId"><option value="">Sem turma específica</option></select>
+                <label for="media-modality">Modalidade (opcional)</label><select id="media-modality" name="modalityId"><option value="">Sem modalidade específica</option></select>
+                <label for="media-match">Partida (opcional)</label><select id="media-match" name="matchId"><option value="">Sem partida específica</option></select>
+                <label class="checkbox-label"><input id="media-consent" name="consent" type="checkbox" required> Confirmo que há autorização para publicar as pessoas identificáveis neste arquivo.</label>
+                <button class="button button-orange" type="submit">Publicar mídia</button><p class="form-feedback" id="media-feedback" aria-live="polite"></p>
+              </form>
+              <div id="media-admin-list" class="admin-list"></div>
+            </details>
+            <details class="admin-tool-card"><summary>Quadros especiais</summary>
+              <form id="spotlight-form" class="admin-form">
+                <label for="spotlight-category">Quadro</label><select id="spotlight-category" name="category" required><option value="clique_rodada">Clique da Rodada</option><option value="revelacao">Revelação do Interclasse</option><option value="meme">Meme da Rodada</option><option value="entrevista">Entrevista Relâmpago</option><option value="hall_fama">Hall da Fama</option><option value="bastidores">Bastidores</option><option value="curiosidade">Você Sabia?</option></select>
+                <label for="spotlight-title">Título</label><input id="spotlight-title" name="title" maxlength="120" required>
+                <label for="spotlight-content">Conteúdo</label><textarea id="spotlight-content" name="content" maxlength="2000" rows="3" required></textarea>
+                <label for="spotlight-class">Turma (opcional)</label><select id="spotlight-class" name="class_id"><option value="">Sem turma específica</option></select>
+                <label for="spotlight-media">Imagem publicada (opcional)</label><select id="spotlight-media" name="media_path"><option value="">Sem imagem</option></select>
+                <button class="button button-orange" type="submit">Publicar destaque</button><p class="form-feedback" id="spotlight-feedback" aria-live="polite"></p>
+              </form>
+              <div id="spotlight-admin-list" class="admin-list"></div>
+            </details>
+            <details class="admin-tool-card"><summary>Moderação do mural</summary><div id="wall-admin-list" class="admin-list"></div></details>
+            <details class="admin-tool-card"><summary>Contas e turmas</summary><div id="profile-admin-list" class="admin-list"></div></details>
+          </div>
+          <p class="storage-note">As permissões são verificadas pelo Supabase e pelas políticas RLS; ocultar este painel não substitui a autorização no banco de dados.</p>
         </div>
       </div>
-      <div class="match-admin-tools">
-        <div class="admin-tool-card">
-          <span class="eyebrow">AGENDA</span><h3>Cadastrar partida</h3>
-          <form id="match-form" class="admin-form">
-            <label for="match-date">Data <span aria-hidden="true">*</span></label><input id="match-date" name="date" type="date" required>
-            <label for="match-time">Horário <span aria-hidden="true">*</span></label><input id="match-time" name="time" type="time" required>
-            <label for="match-sport">Modalidade <span aria-hidden="true">*</span></label><input id="match-sport" name="sport" maxlength="40" placeholder="Ex.: Futsal" required>
-            <div class="match-form-teams"><div><label for="match-home">Turma 1 <span aria-hidden="true">*</span></label><input id="match-home" name="home" maxlength="40" placeholder="Ex.: 8º A" required></div><div><label for="match-away">Turma 2 <span aria-hidden="true">*</span></label><input id="match-away" name="away" maxlength="40" placeholder="Ex.: 8º B" required></div></div>
-            <label for="match-location">Local <span aria-hidden="true">*</span></label><input id="match-location" name="location" maxlength="70" placeholder="Ex.: Quadra principal" required>
-            <button class="button button-orange" type="submit">Cadastrar partida <span>→</span></button>
-            <p class="form-feedback" id="match-feedback" aria-live="polite">Partidas novas são adicionadas sem alterar as existentes.</p>
-          </form>
-        </div>
-        <div class="admin-tool-card">
-          <span class="eyebrow">PLACAR OFICIAL</span><h3>Registrar ou corrigir resultado</h3>
-          <form id="score-form" class="admin-form">
-            <label for="score-match">Partida <span aria-hidden="true">*</span></label><select id="score-match" name="matchId" required><option value="">Selecione uma partida</option></select>
-            <div class="score-fields"><div><label for="score-home">Placar da turma 1 <span aria-hidden="true">*</span></label><input id="score-home" name="homeScore" type="number" min="0" max="99" step="1" inputmode="numeric" required></div><span aria-hidden="true">×</span><div><label for="score-away">Placar da turma 2 <span aria-hidden="true">*</span></label><input id="score-away" name="awayScore" type="number" min="0" max="99" step="1" inputmode="numeric" required></div></div>
-            <button class="button button-orange" type="submit">Salvar placar <span>→</span></button>
-            <p class="form-feedback" id="score-feedback" aria-live="polite">Corrigir um placar existente pede confirmação.</p>
-          </form>
-        </div>
-      </div>
-      <p class="storage-note">Notícias, partidas e resultados são compartilhados quando o banco de dados está conectado. Sem conexão, os dados ficam neste navegador. As fotos da galeria também são armazenadas apenas neste navegador.</p>
     </section>
   </main>
-  <footer class="site-footer"><div class="section-wrap footer-inner"><a class="brand footer-brand" href="#inicio"><span class="brand-mark">✦</span><span>INTERCLASSE<span class="brand-light">INTERATIVO</span></span></a><p>Feito para torcer, participar e jogar junto. <span>Respeito em quadra, alegria na torcida.</span></p><a href="#inicio" class="back-top">Voltar ao topo ↑</a></div></footer>
+  <footer class="site-footer"><div class="section-wrap footer-inner"><a class="brand footer-brand" href="#inicio"><span class="brand-mark">✦</span><span>INTERCLASSE<span class="brand-light">COLÉGIO SINERGE · 2026</span></span></a><p>Três turmas. Uma competição. Uma história para contar.</p><a href="#inicio" class="back-top">Voltar ao topo ↑</a></div></footer>
 </body>
 </html>
