@@ -141,7 +141,7 @@ document.querySelector('#match-form').addEventListener('submit', (event) => {
   }
   renderSchedule();
   form.reset();
-  setFeedback(document.querySelector('#match-feedback'), 'Partida cadastrada e adicionada à agenda local.', 'success');
+  setFeedback(document.querySelector('#match-feedback'), 'Partida salva neste navegador; não foi publicada para outros visitantes.', 'success');
 });
 
 document.querySelector('#score-form').addEventListener('submit', (event) => {
@@ -173,7 +173,7 @@ document.querySelector('#score-form').addEventListener('submit', (event) => {
   }
   renderSchedule();
   form.reset();
-  setFeedback(feedback, 'Resultado salvo; calendário e painel foram atualizados.', 'success');
+  setFeedback(feedback, 'Resultado salvo neste navegador; não foi publicado para outros visitantes.', 'success');
 });
 
 document.querySelector('#score-match').addEventListener('change', (event) => {
@@ -266,7 +266,7 @@ document.querySelector('#news-form').addEventListener('submit', (event) => {
   }
   renderNews();
   form.reset();
-  setFeedback(document.querySelector('#news-feedback'), 'Notícia salva somente neste navegador.', 'success');
+  setFeedback(document.querySelector('#news-feedback'), 'Notícia salva neste navegador; não foi publicada para outros visitantes.', 'success');
 });
 
 function openPhotoDatabase() {
@@ -326,7 +326,7 @@ function renderPhotos(photos) {
     const caption = document.createElement('figcaption');
     caption.textContent = photo.title;
     const localTag = document.createElement('span');
-    localTag.textContent = 'FOTO LOCAL';
+    localTag.textContent = 'NESTE NAVEGADOR';
     caption.append(' ', localTag);
     figure.append(image, caption);
     gallery.append(figure);
@@ -398,14 +398,6 @@ document.addEventListener('keydown', (event) => {
   menuToggle.focus();
 });
 
-document.querySelector('#vote-form').addEventListener('submit', (event) => {
-  event.preventDefault();
-  const candidate = document.querySelector('#vote-candidate').value;
-  const feedback = document.querySelector('#vote-feedback');
-  if (!candidate) return;
-  setFeedback(feedback, `Obrigado por reconhecer o talento de ${candidate.split(' — ')[0]}!`, 'success');
-});
-
 /* Integração compartilhada com Supabase. Sem anon key, o modo local continua disponível. */
 const supabase = window.InterclasseSupabase;
 const supabaseStatus = document.querySelector('#supabase-status');
@@ -420,7 +412,7 @@ function updateAuthInterface(profile) {
   authForm.querySelectorAll('input').forEach((input) => { input.disabled = signedIn; });
   authForm.querySelector('button[type="submit"]').hidden = signedIn;
   signOutButton.hidden = !signedIn;
-  if (!remoteEnabled()) { supabaseStatus.textContent = 'Modo local: inclua a anon key em js/supabase-config.js para conectar ao Supabase.'; return; }
+  if (!remoteEnabled()) { supabaseStatus.textContent = 'Banco de dados não conectado. Alterações feitas aqui ficam salvas apenas neste navegador.'; return; }
   if (profile?.role === 'admin' && profile.active) {
     supabaseStatus.textContent = `Conectado ao Supabase como administrador(a): ${profile.display_name}.`;
     setFeedback(authFeedback, 'Acesso administrativo ativo.', 'success');

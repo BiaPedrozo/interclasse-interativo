@@ -63,7 +63,7 @@ Em uma versão publicada, seria necessário um serviço de backend com autentica
 ## Como conferir calendário e resultados
 
 1. Abra `index.html` ou sirva a pasta localmente. Na seção **Calendário de jogos**, confira as partidas futuras, com data, horário, modalidade, turmas e local, separadas dos resultados concluídos.
-2. Acesse **Área admin → Gerenciar conteúdo → Cadastrar partida fictícia**. Envie o formulário vazio para ver a validação, depois preencha todos os campos e cadastre uma partida. Ela aparece na agenda e continua lá após recarregar a página.
+2. Acesse **Área admin → Gerenciar conteúdo → Cadastrar partida**. Envie o formulário vazio para ver a validação, depois preencha todos os campos e cadastre uma partida. Ela aparece na agenda e continua lá após recarregar a página.
 3. Em **Registrar ou corrigir resultado**, escolha uma partida agendada e preencha os dois placares. Campos vazios, valores negativos, decimais ou acima de 99 não são aceitos. Ao salvar, a partida passa para **Resultados anteriores** e os cartões são atualizados.
 4. Selecione um resultado já concluído. Os placares atuais aparecem nos campos. Ao salvar uma alteração, confirme a substituição; se cancelar, o resultado anterior permanece. Nenhuma partida é alterada ou excluída por navegar ou selecionar opções.
 

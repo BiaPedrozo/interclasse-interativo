@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101e38">
-  <meta name="description" content="Acompanhe jogos, notícias, votação e resultados do Interclasse Interativo.">
+  <meta name="description" content="Acompanhe o calendário, as notícias e os resultados do campeonato interclasse.">
   <title>Interclasse Interativo | Campeonato escolar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
       <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
-        <a href="#inicio">Início</a><a href="#noticias">Notícias</a><a href="#votacao">Destaque</a><a href="#galeria">Galeria</a><a href="#calendario">Jogos</a>
+        <a href="#inicio">Início</a><a href="#noticias">Notícias</a><a href="#galeria">Galeria</a><a href="#calendario">Jogos</a>
         <a class="nav-admin" href="#admin">Área admin <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
@@ -49,35 +49,28 @@
     <section class="ticker" aria-label="Aviso"><div class="ticker-inner"><span class="ticker-tag">AVISO</span><p>Acompanhe a programação, convide a torcida e venha celebrar cada lance! <a href="#calendario">Ver calendário →</a></p><span class="ticker-star">✳</span></div></section>
 
     <section class="section-wrap section-block" id="calendario">
-      <div class="section-heading"><div><span class="eyebrow">AGENDA DO CAMPEONATO</span><h2>Calendário de jogos</h2></div><span class="demo-label">EM QUADRA</span></div>
-      <div class="schedule-group"><div class="subsection-heading"><h3>Jogos futuros</h3><span>Partidas agendadas</span></div><div class="match-grid" id="upcoming-match-grid" aria-live="polite"></div><p class="empty-state" id="upcoming-empty" hidden>Nenhum jogo futuro cadastrado.</p></div>
+      <div class="section-heading"><div><span class="eyebrow">AGENDA DO CAMPEONATO</span><h2>Calendário de jogos</h2></div><span class="demo-label">AGENDA</span></div>
+      <div class="schedule-group"><div class="subsection-heading"><h3>Próximas partidas</h3><span>Partidas agendadas</span></div><div class="match-grid" id="upcoming-match-grid" aria-live="polite"></div><p class="empty-state" id="upcoming-empty" hidden>Nenhuma partida agendada.</p></div>
       <div class="schedule-group" id="pending-group" hidden><div class="subsection-heading"><h3>Aguardando resultado</h3><span>Partidas passadas sem placar</span></div><div class="match-grid" id="pending-match-grid"></div></div>
-      <div class="schedule-group results-group" id="resultados"><div class="subsection-heading"><div><h3>Resultados anteriores</h3><span>Placares registrados pela organização</span></div><span class="demo-label">PLACARES</span></div><div class="match-grid" id="completed-match-grid" aria-live="polite"></div><p class="empty-state" id="completed-empty" hidden>Nenhum resultado registrado ainda. Assim que a partida terminar, o placar aparece aqui.</p></div>
+      <div class="schedule-group results-group" id="resultados"><div class="subsection-heading"><div><h3>Resultados anteriores</h3><span>Placares registrados pela organização</span></div><span class="demo-label">RESULTADOS</span></div><div class="match-grid" id="completed-match-grid" aria-live="polite"></div><p class="empty-state" id="completed-empty" hidden>Nenhum resultado cadastrado.</p></div>
     </section>
 
     <section class="news-section" id="noticias">
       <div class="section-wrap section-block">
         <div class="section-heading">
           <div><span class="eyebrow">FICA POR DENTRO</span><h2>Notícias & comunicados</h2></div>
-          <span class="demo-label">NOTÍCIAS DO CAMPEONATO</span>
+          <span class="demo-label">COMUNICADOS</span>
         </div>
-        <article class="announcement-highlight">
-          <span class="announcement-icon" aria-hidden="true">!</span>
-          <div><span class="news-meta">COMUNICADO DA ORGANIZAÇÃO</span><h3>O campeonato é melhor quando todo mundo participa</h3><p>Confira as novidades, reúna sua torcida e venha apoiar as equipes com entusiasmo e respeito.</p></div>
-        </article>
         <div class="news-grid news-managed" id="news-list" aria-live="polite"></div>
-        <p class="empty-state" id="news-empty" hidden>Nenhuma notícia cadastrada. A organização pode adicionar uma notícia pela área administrativa.</p>
+        <p class="empty-state" id="news-empty" hidden>Nenhuma notícia publicada.</p>
       </div>
-    </section>
-
-    <section class="section-wrap section-block vote-gallery" id="votacao"><div class="vote-panel"><div class="vote-copy"><span class="eyebrow">TALENTO, PARCERIA E RESPEITO</span><h2>Quem merece<br>ser o <span>destaque?</span></h2><p>Reconheça quem inspira a equipe dentro e fora de quadra. Toda grande jogada também começa com união.</p><div class="vote-deadline"><span>◷</span> Acompanhe os destaques do campeonato</div></div><form class="vote-form" id="vote-form"><label for="vote-candidate">Escolha seu destaque</label><select id="vote-candidate" required><option value="">Seleção em breve</option></select><button class="button button-orange" type="submit" disabled>Votação em breve</button><p class="form-feedback" id="vote-feedback" aria-live="polite">A organização divulgará os participantes da votação em breve.</p></form></div>
     </section>
 
     <section class="gallery-section" id="galeria">
       <div class="section-wrap section-block">
-        <div class="section-heading"><div><span class="eyebrow">MOMENTOS QUE FICAM</span><h2>Galeria da torcida</h2></div><span class="gallery-note">REGISTROS DO CAMPEONATO</span></div>
+        <div class="section-heading"><div><span class="eyebrow">FOTOS DO CAMPEONATO</span><h2>Galeria</h2></div><span class="gallery-note">FOTOS NESTE NAVEGADOR</span></div>
         <div class="gallery-grid" id="gallery-list"></div>
-        <p class="empty-state" id="gallery-empty">Os melhores momentos da torcida estarão aqui. A organização pode incluir fotos na área administrativa.</p>
+        <p class="empty-state" id="gallery-empty">Nenhuma foto cadastrada neste navegador.</p>
       </div>
     </section>
 
@@ -88,7 +81,7 @@
       </div>
       <div class="admin-tools" id="admin-tools">
         <div class="admin-tool-card">
-          <span class="eyebrow">ACESSO DA ORGANIZAÇÃO</span><h3>Entrar no Supabase</h3>
+          <span class="eyebrow">ACESSO DA ORGANIZAÇÃO</span><h3>Entrar como administrador</h3>
           <form id="auth-form" class="admin-form">
             <label for="auth-email">E-mail</label><input id="auth-email" name="email" type="email" autocomplete="email" required>
             <label for="auth-password">Senha</label><input id="auth-password" name="password" type="password" autocomplete="current-password" required>
@@ -142,7 +135,7 @@
           </form>
         </div>
       </div>
-      <p class="storage-note">Notícias e partidas são compartilhadas quando a conexão com o banco de dados está ativa. Fotos e votos ainda não são publicados para outros dispositivos.</p>
+      <p class="storage-note">Notícias, partidas e resultados são compartilhados quando o banco de dados está conectado. Sem conexão, os dados ficam neste navegador. As fotos da galeria também são armazenadas apenas neste navegador.</p>
     </section>
   </main>
   <footer class="site-footer"><div class="section-wrap footer-inner"><a class="brand footer-brand" href="#inicio"><span class="brand-mark">✦</span><span>INTERCLASSE<span class="brand-light">INTERATIVO</span></span></a><p>Feito para torcer, participar e jogar junto. <span>Respeito em quadra, alegria na torcida.</span></p><a href="#inicio" class="back-top">Voltar ao topo ↑</a></div></footer>
