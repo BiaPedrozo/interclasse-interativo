@@ -29,6 +29,12 @@ where id = 'UUID_DA_CONTA_AUTORIZADA';
 
 O bucket `gallery` é privado. A interface já consulta e atualiza notícias, partidas e resultados pelo Supabase quando a configuração estiver preenchida. O envio compartilhado de imagens permanece pendente de integração da galeria.
 
+## Reiniciar os dados do Supabase sem apagar usuários
+
+A migration `supabase/migrations/20261123103000_reset_application_data_keep_users.sql` apaga os dados operacionais (incluindo turmas, modalidades, equipes, partidas, resultados, notícias, imagens cadastradas, enquetes, votos e auditoria). Ela preserva `auth.users` e `public.profiles`, mas remove a associação de turma (`profiles.class_id`) antes de apagar as turmas. O schema, as contas/perfis e o bucket `gallery` permanecem. Arquivos armazenados no bucket não são removidos por esta migration.
+
+Faça um backup antes de aplicá-la. Com o Supabase CLI vinculado ao projeto correto, aplique-a uma única vez com `supabase db push`. Não a execute novamente após novos dados serem cadastrados. Evite colar o arquivo no SQL Editor se também usa o CLI: uma execução manual não registra automaticamente a migration no histórico do CLI e pode fazer com que ela seja aplicada novamente.
+
 ## Conectar a interface ao Supabase
 
 1. Aplique primeiro a migração SQL ao projeto Supabase.
